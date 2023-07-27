@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 
 import {
@@ -17,7 +17,6 @@ import main from "./storage/atoms/main";
 
 const App = withAdaptivity(
   ({ viewWidth }) => {
-    const [theme, setTheme] = useState<"light" | "dark">("light");
     const [, updateMainCoil] = useRecoilState(main);
 
     const platform = usePlatform();
@@ -26,15 +25,6 @@ const App = withAdaptivity(
       (viewWidth && viewWidth > 3) ||
       new URLSearchParams(window.location.search).get("vk_platform") ===
         "desktop_web";
-
-    useEffect(() => {
-      bridge.subscribe(({ detail: { type, data } }) => {
-        if (type === "VKWebAppUpdateConfig") {
-          // @ts-ignore
-          setTheme(data?.scheme.includes("light") ? "light" : "dark");
-        }
-      });
-    }, []);
 
     useEffect(() => {
       bridge.send("VKWebAppInit").then(() => console.log("VKWebAppInit"));
@@ -50,10 +40,10 @@ const App = withAdaptivity(
       <ConfigProvider
         locale={"ru"}
         isWebView={false}
-        appearance={theme || "light"}
+        appearance={"light"}
         platform={isDesktop ? "android" : platform}
       >
-        <AppearanceProvider appearance={theme || "light"}>
+        <AppearanceProvider appearance={"light"}>
           <AppRoot mode="full" className={isDesktop ? "desktop" : "mobile"}>
             <SnackbarProvider>
               <Navigation isDesktop={isDesktop} />

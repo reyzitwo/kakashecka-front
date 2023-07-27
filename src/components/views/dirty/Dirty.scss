@@ -1,0 +1,32 @@
+.Dirty_referral-link {
+  .Cell__before .Button {
+    box-shadow: 0 5px 15px 0 rgba(21, 121, 228, 0.15);
+
+    height: 32px;
+    width: 32px;
+    padding: 0;
+  }
+
+  .Cell__content {
+    .Cell__header {
+      color: #98a7b7;
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .Cell__subheader {
+      color: #222e39;
+      font-size: 12px;
+      font-weight: 500;
+    }
+  }
+
+  .Cell__after .Button {
+    height: 28px;
+    font-size: 11px;
+  }
+}
+
+.Dirty_share-story {
+  font-size: 11px;
+}

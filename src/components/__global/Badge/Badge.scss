@@ -1,0 +1,33 @@
+.Badge {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// color
+.Badge_color_white {
+  color: #98a7b7;
+  background-color: #f5f7f9;
+}
+
+.Badge_color_blue {
+  color: #fff;
+  background: var(--color_blue);
+}
+
+// mode
+.Badge_mode_circle {
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.Badge_mode_vertical {
+  height: 13px;
+  padding: 3px;
+  border-radius: 4.5px;
+  font-size: 10px;
+  font-weight: 600;
+}

@@ -1,6 +1,6 @@
 {
   "static_path": "dist",
-  "app_id": "",
+  "app_id": "51710990",
   "deploy_mode": "static",
   "use_random_prefix": false,
   "purge_access_token": false

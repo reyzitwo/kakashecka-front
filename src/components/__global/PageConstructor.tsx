@@ -1,15 +1,14 @@
 import { ReactNode, Suspense } from "react";
-import { useRecoilValue } from "recoil";
-import { useRouterBack } from "@kokateam/router-vkminiapps";
 
-import { Group, Panel, PanelHeader, PanelHeaderBack } from "@vkontakte/vkui";
-import { getIsDesktop } from "src/storage/selectors/main";
+import { Panel } from "@vkontakte/vkui";
+import { Group } from "src/components/__global";
 
 interface PageI {
   id: string;
   centered?: boolean;
-  isBack?: boolean;
-  name?: string;
+  paddingLevel?: 1 | 2;
+  header?: string;
+  isSomeGroups?: boolean;
   className?: string;
   children: ReactNode;
 }
@@ -17,31 +16,27 @@ interface PageI {
 const Page = ({
   id,
   centered = false,
-  isBack = false,
-  name = "",
-  className = "",
+  paddingLevel = 1,
+  header = "",
+  className,
+  isSomeGroups,
   children,
 }: PageI) => {
-  const isDesktop = useRecoilValue(getIsDesktop);
-  const toBack = useRouterBack();
+  const content = <Suspense fallback={""}>{children}</Suspense>;
 
   return (
-    <Panel
-      id={id}
-      centered={centered}
-      className={`${!isDesktop ? "DivFix" : undefined} ${className}`}
-    >
-      <PanelHeader
-        before={
-          isBack ? <PanelHeaderBack onClick={() => toBack(-1)} /> : undefined
-        }
-        separator={isDesktop}
-      >
-        {name}
-      </PanelHeader>
-      <Group className={isDesktop ? "" : "p5"}>
-        <Suspense fallback={""}>{children}</Suspense>
-      </Group>
+    <Panel id={id} centered={centered}>
+      {isSomeGroups ? (
+        content
+      ) : (
+        <Group
+          paddingLevel={paddingLevel}
+          header={{ text: header, mode: "center", background: "blue" }}
+          className={className}
+        >
+          {content}
+        </Group>
+      )}
     </Panel>
   );
 };

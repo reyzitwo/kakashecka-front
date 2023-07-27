@@ -1,0 +1,9 @@
+.CustomSpinner {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .vkuiSpinner {
+    margin: 20px 0;
+  }
+}

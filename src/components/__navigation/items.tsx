@@ -1,16 +1,29 @@
-import { Icon24HomeOutline, Icon24UserCircleOutline } from "@vkontakte/icons";
+import * as Icons from "./svg";
 
 export default [
   {
-    id: "home",
-    title: "Главная",
-    description: "Описание раздела",
-    icon: <Icon24HomeOutline />,
+    id: "top",
+    title: "Топ",
+    icon: <Icons.IconTop />,
   },
   {
-    id: "profile",
+    id: "dirty",
+    title: "Испачкать",
+    icon: <Icons.IconDirty />,
+  },
+  {
+    id: "dirty",
     title: "Профиль",
-    description: "Описание раздела",
-    icon: <Icon24UserCircleOutline />,
+    icon: <Icons.IconProfile />,
+  },
+  {
+    id: "shop",
+    title: "Магазин",
+    icon: <Icons.IconShop />,
+  },
+  {
+    id: "more",
+    title: "Еще",
+    icon: <Icons.IconMore />,
   },
 ];

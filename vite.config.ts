@@ -11,7 +11,12 @@ export default ({ mode }) => {
 
   return defineConfig({
     plugins: [react(), svgr(), process?.env?.ODR ? viteSingleFile() : null],
-    resolve: { alias: { src: path.resolve("src/") } },
+    resolve: {
+      alias: {
+        src: path.resolve("src/"),
+        fs: require.resolve("rollup-plugin-node-builtins"),
+      },
+    },
     optimizeDeps: {
       include: ["recoil"],
     },

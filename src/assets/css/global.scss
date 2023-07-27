@@ -1,5 +1,48 @@
 @import "@vkontakte/vkui/dist/vkui.css", "variables.scss";
 
+:root {
+  --border-radius_level_1: 6px;
+  --border-radius_level_2: 8px;
+  --border-radius_level_3: 10px;
+
+  --color_white: #fff;
+  --color_green: linear-gradient(180deg, #9ddc4d 0%, #409717 100%);
+  --color_blue: radial-gradient(
+    75% 75% at 50% 15.91%,
+    #4dd0fb 0%,
+    #1579e3 100%
+  );
+  --color_orange: linear-gradient(180deg, #fdd43e 0%, #e98a1a 100%);
+
+  --box-shadow: 0 4px 25px 0 rgba(190, 202, 214, 0.35);
+
+  --transition: all 0.3s ease;
+}
+
+.vkui__portal-root,
+.vkui__root {
+  --font-common: "Euclid Circular A", sans-serif;
+}
+
+html,
+body {
+  font-family: "Euclid Circular A", sans-serif;
+}
+
+.vkuiPanel .vkuiPanel__in,
+.vkuiPanel:after {
+  background-color: #f6f7f9;
+}
+
+.Panel::after {
+  position: fixed;
+}
+
+// padding для возможности проскроллить таббар
+.vkuiPanel {
+  padding-bottom: 74px;
+}
+
 body,
 .Header {
   user-select: none;
@@ -22,23 +65,6 @@ body[scheme="vkcom_dark"],
   .vkuiTappable {
     display: none;
   }
-}
-
-.vkuiPanelHeader__content-in,
-.vkuiModalPageHeader__content-in {
-  font-weight: 400 !important;
-}
-
-.SimpleCell {
-  border-radius: 8px;
-}
-
-.navigation__item-selected {
-  background-color: var(--vkui--color_background--hover);
-}
-
-.panelPadding {
-  margin: 5px 10px;
 }
 
 .mobile {

@@ -1,0 +1,46 @@
+.Cell {
+  display: flex;
+  align-items: center;
+
+  padding: 10px;
+  border-radius: 14px;
+  outline: 1px solid #f5f7f9;
+
+  margin-top: 10px;
+
+  .Cell__before {
+    flex-shrink: 0;
+    margin-right: 10px;
+  }
+
+  .Cell__avatar {
+    flex-shrink: 0;
+    margin-right: 8px;
+  }
+
+  .Cell__content {
+    flex-grow: 1;
+    max-width: 100%;
+
+    .Cell__header {
+      color: #222e39;
+    }
+
+    .Cell__subheader {
+      font-size: 10px;
+      margin-top: 4px;
+    }
+  }
+
+  .Cell__after {
+    flex-shrink: 0;
+  }
+}
+
+.Cell_text-size_1 {
+  font-size: 11px;
+}
+
+.Cell_text-size_2 {
+  font-size: 12px;
+}

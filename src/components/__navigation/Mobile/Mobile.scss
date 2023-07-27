@@ -1,0 +1,24 @@
+.vkuiTabbar {
+  width: calc(100% - 15px * 2) !important;
+  margin: 15px;
+  border-radius: 14px;
+  box-shadow: var(--box-shadow) !important;
+
+  padding: 11px 0 15px !important;
+
+  &:before {
+    content: none !important;
+  }
+
+  .vkuiTabbarItem {
+    height: calc(var(--tabbar_height) + 1px);
+  }
+
+  .vkuiTabbarItem__text {
+    color: #637a8e;
+    font-size: 11px;
+    font-weight: 600;
+
+    margin-top: 10px;
+  }
+}

@@ -1,0 +1,38 @@
+.Card {
+  border-radius: 10px;
+  background: #f5f7f9;
+
+  padding: 15px 11px 10px;
+
+  text-align: center;
+
+  .Card__img {
+    height: 24px;
+    margin-bottom: 10px;
+  }
+
+  .Card__header {
+    color: #222e39;
+    font-size: 11px;
+
+    margin-bottom: 6px;
+  }
+
+  .Card__subheader {
+    color: #97a7b7;
+    font-size: 9px;
+    font-weight: 500;
+    white-space: pre-line;
+
+    margin-bottom: 10px;
+  }
+
+  .Button {
+    margin: 0 auto;
+
+    img {
+      height: 14px;
+      margin-top: 5px;
+    }
+  }
+}

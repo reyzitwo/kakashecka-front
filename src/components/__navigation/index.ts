@@ -1,2 +1,1 @@
-export { default as DesktopNavigation } from "./Desktop";
-export { default as MobileNavigation } from "./Mobile";
+export { default as MobileNavigation } from "src/components/__navigation/Mobile/Mobile";
