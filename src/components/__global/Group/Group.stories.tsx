@@ -13,7 +13,7 @@ type Story = StoryObj<typeof meta>;
 
 export const WithHeader: Story = {
   args: {
-    header: { text: "Hello!", mode: "center", background: "orange" },
+    header: { text: "UserProfile!", mode: "center", background: "orange" },
     children: "Test!",
   },
 };

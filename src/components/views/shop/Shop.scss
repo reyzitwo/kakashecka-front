@@ -5,47 +5,6 @@
   .Button {
     width: 50%;
   }
-
-  .Cell {
-    outline: none;
-    background-color: #f5f7f9;
-    border-radius: 10px;
-
-    padding: 7px;
-    margin-top: 0;
-    margin-right: 10px;
-
-    .Cell__before {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      height: 32px;
-      width: 32px;
-
-      background-color: #fff;
-      border-radius: 6px;
-
-      img {
-        height: 21px;
-      }
-    }
-
-    .Cell__content {
-      .Cell__header {
-        color: #97a7b7;
-        font-weight: 500;
-      }
-
-      .Cell__subheader {
-        color: #222e39;
-        font-size: 14px;
-        font-weight: 600;
-
-        margin-top: 2px;
-      }
-    }
-  }
 }
 
 .Shop_markets {

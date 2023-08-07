@@ -4,5 +4,6 @@ export default interface CardProps {
   header: string;
   subheader: string;
   price: number;
+  onClick: () => void;
   className?: string;
 }

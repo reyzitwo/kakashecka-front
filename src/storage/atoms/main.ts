@@ -3,6 +3,7 @@ import { atom } from "recoil";
 interface mainI {
   isDesktop: boolean;
   platform: string;
+  closingAlert: boolean;
 }
 
 const _ = atom<mainI>({
@@ -10,6 +11,7 @@ const _ = atom<mainI>({
   default: {
     isDesktop: false,
     platform: "",
+    closingAlert: false,
   },
 });
 

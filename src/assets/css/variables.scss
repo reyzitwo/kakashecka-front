@@ -41,3 +41,24 @@
 .flex {
   display: flex;
 }
+
+.header {
+  color: #222e39;
+  font-weight: 600;
+}
+
+.description {
+  color: #98a7b7;
+  font-weight: 500;
+}
+
+.div-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-after {
+  height: 14px;
+  width: 14px;
+}

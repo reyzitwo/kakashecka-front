@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
+import { useRouterModal } from "@kokateam/router-vkminiapps";
 
 import { HorizontalScroll } from "@vkontakte/vkui";
 import { Button, Spinner, Cell } from "src/components/__global";
-import ImgToiletPaper from "src/assets/png/toilet_paper.png";
+import ImgToiletPaper from "src/assets/img/toilet_paper.png";
 
 import { top } from "src/storage/atoms";
 import { api } from "src/modules";
@@ -18,6 +19,7 @@ const Tabs = [
 
 const Top = () => {
   const [state, setState] = useRecoilState(top);
+  const [, toModal] = useRouterModal();
 
   const handlerSetState = (json: object) => {
     setState((prev) => ({ ...prev, ...json }));
@@ -56,9 +58,7 @@ const Top = () => {
         state.users.map((element) => (
           <Cell
             key={element.id}
-            onClick={() =>
-              window.open(`https://vk.com/id${element.id}`, "_href")
-            }
+            onClick={() => toModal("userProfile", element)}
             before={<div className={"Top-Place"}>{element.id}</div>}
             after={
               <div className={"Top-Balance"}>

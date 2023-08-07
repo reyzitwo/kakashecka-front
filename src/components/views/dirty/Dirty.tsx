@@ -1,9 +1,10 @@
 import { useRecoilState } from "recoil";
 import { useEffect } from "react";
+import { useRouterModal } from "@kokateam/router-vkminiapps";
 
 import { Button, Cell, Header, Spinner } from "src/components/__global";
 import { Icon24UserAdd, Icon12Clock } from "@vkontakte/icons";
-import ImgToiletPaper from "src/assets/png/toilet_paper.png";
+import ImgToiletPaper from "src/assets/img/toilet_paper.png";
 
 import bridge from "@vkontakte/vk-bridge";
 import { invited } from "src/storage/atoms";
@@ -13,6 +14,7 @@ import "./Dirty.scss";
 
 const Dirty = () => {
   const [state, setState] = useRecoilState(invited);
+  const [, toModal] = useRouterModal();
 
   useEffect(() => {
     if (!state) {
@@ -54,6 +56,7 @@ const Dirty = () => {
         before={<Icon12Clock height={20} width={20} />}
         size={"large"}
         stretched
+        onClick={() => toModal("shareStories")}
         className={"Dirty_share-story mt10"}
       >
         Поделиться в истории

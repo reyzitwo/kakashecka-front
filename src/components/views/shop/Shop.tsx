@@ -1,21 +1,23 @@
-import { Cell, Button, Header, Card } from "src/components/__global";
-import ImgToiletPaper from "src/assets/png/toilet_paper.png";
+import { useRouterHooks } from "@kokateam/router-vkminiapps";
+
+import { Balance, Button, Header, Card } from "src/components/__global";
+import { PopoutBuy } from "src/components/__popouts";
 
 import "./Shop.scss";
 
 const Shop = () => {
+  const { toModal, toPopout } = useRouterHooks();
+
   return (
     <>
       <div className={"Shop_balance-block"}>
-        <Cell
-          before={<img src={ImgToiletPaper} alt={""} />}
-          subheader={(1234567).toLocaleString("ru")}
-          className={"Shop_balance-block_balance"}
-        >
-          Баланс
-        </Cell>
+        <Balance balance={1234567} />
 
-        <Button size={"large"} background={"green"}>
+        <Button
+          size={"large"}
+          background={"green"}
+          onClick={() => toModal("earnPaper")}
+        >
           Заработать
         </Button>
       </div>
@@ -28,6 +30,7 @@ const Shop = () => {
           header={"Мыло"}
           subheader={"Восстанавливает\n10% чистоты"}
           price={50}
+          onClick={() => toPopout(<PopoutBuy />, "hello")}
         />
 
         <Card
@@ -36,6 +39,7 @@ const Shop = () => {
           header={"Мыло #2"}
           subheader={"Восстанавливает\n10% чистоты"}
           price={50}
+          onClick={() => toPopout(<PopoutBuy />, "hello")}
         />
 
         <Card
@@ -44,6 +48,7 @@ const Shop = () => {
           header={"Мыло #3"}
           subheader={"Восстанавливает\n10% чистоты"}
           price={50}
+          onClick={() => toPopout(<PopoutBuy />, "hello")}
         />
 
         <Card
@@ -52,6 +57,7 @@ const Shop = () => {
           header={"Мыло #4"}
           subheader={"Восстанавливает\n10% чистоты"}
           price={50}
+          onClick={() => toPopout(<PopoutBuy />, "hello")}
         />
       </div>
     </>

@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 
 export default interface HeaderProps {
-  badge: ReactNode;
+  size?: "small" | "medium";
+  badge?: ReactNode;
   children: ReactNode;
   className?: string;
 }

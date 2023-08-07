@@ -6,7 +6,7 @@ import navigationItems from "src/components/__navigation/items";
 import "./Mobile.scss";
 
 const MobileNavigation = () => {
-  const { view, toView } = useRouterView();
+  const [view, toView] = useRouterView();
 
   return (
     <Tabbar>

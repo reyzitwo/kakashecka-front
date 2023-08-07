@@ -19,12 +19,16 @@
   }
 }
 
-// before
+// before & after
+.Button__before,
+.Button__after {
+  display: inline-flex;
+}
+
 .Button__before {
   margin-right: 8px;
 }
 
-// after
 .Button__after {
   margin-left: 4px;
 }

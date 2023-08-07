@@ -2,7 +2,7 @@ import { FC } from "react";
 import { clsx } from "clsx";
 
 import { Button } from "../";
-import ImgToiletPaper from "src/assets/png/toilet_paper.png";
+import ImgToiletPaper from "src/assets/img/toilet_paper.png";
 
 import Props from "./Card.interface";
 
@@ -14,6 +14,7 @@ const Card: FC<Props> = ({
   header,
   subheader,
   price,
+  onClick,
   className,
 }) => {
   return (
@@ -23,7 +24,9 @@ const Card: FC<Props> = ({
       <b className={"Card__header"}>{header}</b>
       <div className={"Card__subheader"}>{subheader}</div>
 
-      <Button after={<img src={ImgToiletPaper} alt={""} />}>{price}</Button>
+      <Button after={<img src={ImgToiletPaper} alt={""} />} onClick={onClick}>
+        {price}
+      </Button>
     </div>
   );
 };
