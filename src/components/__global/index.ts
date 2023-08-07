@@ -12,4 +12,3 @@ export { default as Card } from "./Card/Card";
 export { default as Balance } from "./Balance/Balance";
 export { default as Alert } from "./Alert/Alert";
 export { default as Banner } from "./Banner/Banner";
-export { default as HelloWorld } from "./HelloWorld/HelloWorld";

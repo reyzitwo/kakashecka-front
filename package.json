@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "homepage": "./",
   "scripts": {
-    "dev": "node extension_autocreate_files/extension_autocreate_files.js && vite --port=3000",
+    "dev": "node extension_autocreate_files.js && vite --port=3000",
     "build": "vite build --base=./",
     "preview": "vite preview",
     "odr": "env ODR=1 yarn build",
