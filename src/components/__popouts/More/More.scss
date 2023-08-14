@@ -1,0 +1,37 @@
+.vkuiPopoutRoot__popout[id="more"] {
+  z-index: 1;
+
+  .vkuiPopoutWrapper__container {
+    align-items: end;
+  }
+
+  .vkuiPopoutWrapper__content {
+    margin-bottom: calc(
+      74px + 15px + 20px
+    ); // height + padding-bottom + margin from popout "more"
+  }
+
+  .Alert {
+    position: relative;
+
+    padding: 15px;
+    border: 1px solid #eef3f8;
+
+    &:after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 9.5px solid transparent;
+      border-right: 9.5px solid transparent;
+      border-top: 19px solid white;
+      bottom: -15px;
+      right: 24px;
+    }
+  }
+
+  .Cell .Cell__content .Cell__subheader {
+    color: #97a7b7;
+    font-weight: 500;
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "initialize": {
+    "endpoint": "initialize",
+    "method": "POST"
+  },
+  "profile": {
+    "endpoint": "profile",
+    "method": "GET"
+  },
+  "dirtyUsers": {
+    "get": {
+      "endpoint": "dirty-users",
+      "method": "GET"
+    },
+    "dirty": {
+      "endpoint": "dirty-users",
+      "method": "POST"
+    },
+    "dirtyUsers": {
+      "endpoint": "dirty-users/claim/{value}",
+      "method": "POST"
+    }
+  },
+  "theft": {
+    "endpoint": "theft",
+    "method": "POST"
+  },
+  "referrals": {
+    "endpoint": "referrals",
+    "method": "GET"
+  },
+  "shopItems": {
+    "get": {
+      "endpoint": "shop/items",
+      "method": "GET"
+    },
+    "buy": {
+      "endpoint": "shop/items/{value}",
+      "method": "POST"
+    },
+    "use": {
+      "endpoint": "shop/items/{value}/use",
+      "method": "POST"
+    }
+  },
+  "top": {
+    "endpoint": "top",
+    "method": "GET"
+  },
+  "ads": {
+    "get": {
+      "endpoint": "ads",
+      "method": "GET"
+    },
+    "watch": {
+      "endpoint": "ads",
+      "method": "POST"
+    }
+  },
+  "bonuses": {
+    "get": {
+      "endpoint": "bonuses",
+      "method": "GET"
+    },
+    "claim": {
+      "endpoint": "bonuses/{value}",
+      "method": "POST"
+    }
+  },
+  "stories": {
+    "get": {
+      "endpoint": "stories/templates",
+      "method": "GET"
+    },
+    "post": {
+      "endpoint": "stories",
+      "method": "POST"
+    }
+  }
+}

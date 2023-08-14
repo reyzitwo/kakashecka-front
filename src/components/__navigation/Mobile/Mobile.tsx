@@ -1,4 +1,4 @@
-import { useRouterView } from "@kokateam/router-vkminiapps";
+import { useRouterPopout, useRouterView } from "@kokateam/router-vkminiapps";
 
 import { Tabbar, TabbarItem } from "@vkontakte/vkui";
 import navigationItems from "src/components/__navigation/items";
@@ -7,12 +7,19 @@ import "./Mobile.scss";
 
 const MobileNavigation = () => {
   const [view, toView] = useRouterView();
+  const [, toPopout] = useRouterPopout();
 
   return (
     <Tabbar>
       {navigationItems.map((el, key) => (
         <TabbarItem
-          onClick={() => toView(el.id)}
+          onClick={() => {
+            if (el.popout) {
+              return toPopout(el.popout);
+            }
+
+            toView(el.id);
+          }}
           key={key}
           selected={view === el.id}
           text={el.title}

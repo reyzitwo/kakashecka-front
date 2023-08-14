@@ -21,6 +21,7 @@
   .Cell__content {
     flex-grow: 1;
     max-width: 100%;
+    overflow: hidden;
 
     .Cell__header {
       color: #222e39;
@@ -29,6 +30,10 @@
     .Cell__subheader {
       font-size: 10px;
       margin-top: 4px;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 

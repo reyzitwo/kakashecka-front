@@ -7,14 +7,14 @@ import { Button, Spinner, Cell } from "src/components/__global";
 import ImgToiletPaper from "src/assets/img/toilet_paper.png";
 
 import { top } from "src/storage/atoms";
-import { api } from "src/modules";
+import { API } from "src/modules";
 
 import "./Top.scss";
 
 const Tabs = [
-  { id: 1, title: "По балансу" },
-  { id: 2, title: "По чистоте" },
-  { id: 3, title: "По испачканным" },
+  { id: "balance", title: "По балансу" },
+  { id: "contamination", title: "По чистоте" },
+  { id: "purity", title: "По испачканным" },
 ];
 
 const Top = () => {
@@ -26,15 +26,15 @@ const Top = () => {
   };
 
   useEffect(() => {
-    if (!state.users) {
-      getUsers();
-    }
+    getUsers(state.activeTab);
   }, []);
 
-  const getUsers = () => {
-    api("users", "GET").then((data) => {
-      handlerSetState({ users: data });
-    });
+  const getUsers = async (type: "balance" | "contamination" | "purity") => {
+    if (state[type]) return;
+    let users = await new API().top({ type: type });
+    handlerSetState({ [type]: users });
+
+    // balance, contamination, purity
   };
 
   return (
@@ -46,7 +46,11 @@ const Top = () => {
               key={element.id}
               background={state.activeTab === element.id ? "orange" : "gray"}
               disabled={state.activeTab === element.id}
-              onClick={() => handlerSetState({ activeTab: element.id })}
+              onClick={() => {
+                handlerSetState({ activeTab: element.id });
+                // @ts-ignore
+                getUsers(element.id);
+              }}
             >
               {element.title}
             </Button>
@@ -54,19 +58,20 @@ const Top = () => {
         </div>
       </HorizontalScroll>
 
-      {state.users ? (
-        state.users.map((element) => (
+      {state[state.activeTab] ? (
+        // @ts-ignore, сверху проверка на null
+        state[state.activeTab].map((element, index) => (
           <Cell
             key={element.id}
             onClick={() => toModal("userProfile", element)}
-            before={<div className={"Top-Place"}>{element.id}</div>}
+            before={<div className={"Top-Place"}>{index + 1}</div>}
             after={
               <div className={"Top-Balance"}>
-                {(232332).toLocaleString("ru")}
+                {element.toilet_paper.toLocaleString("ru")}
                 <img src={ImgToiletPaper} alt={""} />
               </div>
             }
-            avatar={"1"}
+            avatar={element.avatar}
             textSize={2}
           >
             {element.name}

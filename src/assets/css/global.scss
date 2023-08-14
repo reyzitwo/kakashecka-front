@@ -71,8 +71,14 @@ body[scheme="vkcom_dark"],
   }
 }
 
-.mobile {
-  .toast {
-    margin-top: 30px;
+symbol[id="check_circle_filled_blue_24"] {
+  path {
+    fill: #a5ca56;
+  }
+}
+
+symbol[id="error_circle_fill_red_24"] {
+  circle {
+    fill: #fd5e5e;
   }
 }

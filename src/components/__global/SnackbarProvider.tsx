@@ -1,29 +1,40 @@
 import { ReactNode } from "react";
+import { useRecoilState } from "recoil";
 
-import { useRecoilValue } from "recoil";
-import { Toaster } from "react-hot-toast";
+import { Snackbar } from "@vkontakte/vkui";
+import {
+  Icon24ErrorCircleFillRed,
+  Icon24CheckCircleFilledBlue,
+} from "@vkontakte/icons";
 
-import { getIsDesktop } from "src/storage/selectors/main";
+import { SelectorSnackbar } from "src/storage/selectors/main";
 
 interface SnackbarProviderI {
   children: ReactNode;
 }
 
+const icons = {
+  error: <Icon24ErrorCircleFillRed />,
+  success: <Icon24CheckCircleFilledBlue />,
+  warning: <Icon24ErrorCircleFillRed fill={"#FFFFFF"} />,
+};
+
 export default function SnackbarProvider({ children }: SnackbarProviderI) {
-  const isDesktop = useRecoilValue(getIsDesktop);
+  const [state, setState] = useRecoilState(SelectorSnackbar);
 
   return (
     <>
       {children}
 
-      <Toaster
-        toastOptions={{
-          className: "toast",
-        }}
-        gutter={isDesktop ? 8 : -20}
-        position={isDesktop ? "bottom-left" : "top-center"}
-        reverseOrder={false}
-      />
+      {state && (
+        <Snackbar
+          before={icons[state.status]}
+          onClose={() => setState(null)}
+          duration={60 * 1000}
+        >
+          {state.text}
+        </Snackbar>
+      )}
     </>
   );
 }

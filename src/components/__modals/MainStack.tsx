@@ -10,6 +10,7 @@ const MainStack = () => {
       <Modals.UserProfile id={"userProfile"} onClose={() => toModal(-1)} />
       <Modals.ShareStories id={"shareStories"} onClose={() => toModal(-1)} />
       <Modals.EarnPaper id={"earnPaper"} onClose={() => toModal(-1)} />
+      <Modals.Bonuses id={"bonuses"} onClose={() => toModal(-1)} />
     </ModalRoot>
   );
 };

@@ -2,6 +2,50 @@
   margin-top: 4px;
 }
 
+.ShareStories-Templates {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+
+  .ShareStories-Templates__item {
+    position: relative;
+
+    cursor: pointer;
+    transition: var(--transition);
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 9px;
+      right: 9px;
+
+      height: 22px;
+      width: 22px;
+      border-radius: 24px;
+      border: 2px solid rgba(129, 140, 153, 0.25);
+    }
+
+    &:hover {
+      opacity: 0.75;
+    }
+
+    img {
+      height: 130px;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+  }
+
+  .ShareStories-Templates__item_active:before {
+    height: 24px;
+    width: 24px;
+    border: none;
+
+    background-image: url("./svg/check.svg");
+  }
+}
+
 .ShareStories-Button {
   font-size: 11px;
 }

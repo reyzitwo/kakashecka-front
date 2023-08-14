@@ -4,7 +4,7 @@ import { Epic, View, useRouterPopout } from "@kokateam/router-vkminiapps";
 import { PageConstructor } from "src/components/__global";
 import { MobileNavigation } from "./components/__navigation";
 
-import { Top, Dirty, Shop } from "src/components/views";
+import { Top, Dirty, Shop, Profile } from "src/components/views";
 import MainStack from "./components/__modals/MainStack";
 
 interface NavigationI {
@@ -23,6 +23,12 @@ const Navigation = ({ isDesktop }: NavigationI) => {
         maxWidth={isDesktop ? "650px" : "100%"}
       >
         <Epic tabbar={<MobileNavigation />}>
+          <View id="profile">
+            <PageConstructor id={"profile"} isSomeGroups>
+              <Profile />
+            </PageConstructor>
+          </View>
+
           <View id="top">
             <PageConstructor id={"top"} header="Топ игроков">
               <Top />

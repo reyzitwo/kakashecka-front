@@ -1,21 +1,20 @@
 import { atom } from "recoil";
-
-interface User {
-  id: number;
-  name: string;
-  avatar: string;
-}
+import { TopResponse } from "src/modules/api/interfaces/response";
 
 interface topI {
-  users: null | Array<User>;
-  activeTab: 1 | 2 | 3;
+  balance: null | Array<TopResponse>;
+  contamination: null | Array<TopResponse>;
+  purity: null | Array<TopResponse>;
+  activeTab: "balance" | "contamination" | "purity";
 }
 
 const _ = atom<topI>({
   key: "topStorage",
   default: {
-    users: null,
-    activeTab: 1,
+    balance: null,
+    contamination: null,
+    purity: null,
+    activeTab: "balance",
   },
 });
 

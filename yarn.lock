@@ -2323,6 +2323,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/crypto-js@^4.1.1":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@types/crypto-js/-/crypto-js-4.1.1.tgz#602859584cecc91894eb23a4892f38cfa927890d"
+  integrity sha512-BG7fQKZ689HIoc5h+6D2Dgq1fABRa0RbBWKBd9SP/MVRVXROflpm5fhwyATX5duFmbStzyzyycPB8qUYKDH3NA==
+
 "@types/detect-port@^1.3.0":
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/@types/detect-port/-/detect-port-1.3.3.tgz#124c5d4c283f48a21f80826bcf39433b3e64aa81"
@@ -2728,10 +2733,10 @@
   dependencies:
     "@vkontakte/icons-sprite" "1.1.1"
 
-"@vkontakte/vk-bridge@^2.7.2":
-  version "2.8.3"
-  resolved "https://registry.yarnpkg.com/@vkontakte/vk-bridge/-/vk-bridge-2.8.3.tgz#f2a85397ec7944a23131835ede3caf7be39cc96c"
-  integrity sha512-rxlNVmmBxKs7to9ZWkvM8G2RlbxNudJtEGtNggngmFzqY506bQZ4CLCWmR0Y1Z2LKoE1OaLTlLAyexmbEW3g4A==
+"@vkontakte/vk-bridge@^2.10.0":
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/vk-bridge/-/vk-bridge-2.10.0.tgz#aacfcc6cd3c5975572d4c154d46b64d8ba6efb2c"
+  integrity sha512-mkBq0sZfID8Z8CJ8G863XEHBQF/QTkyXFEo+7IlCBN+umlaCx0bI0L7a3vBxAAEIU/z6j5+twYT+0ty/y3f6+w==
 
 "@vkontakte/vk-tunnel@^0.1.3":
   version "0.1.3"
@@ -3751,6 +3756,11 @@ crypto-browserify@^3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
     randomfill "^1.0.3"
+
+crypto-js@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.1.1.tgz#9e485bcf03521041bd85844786b83fb7619736cf"
+  integrity sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
 
 crypto-random-string@^2.0.0:
   version "2.0.0"

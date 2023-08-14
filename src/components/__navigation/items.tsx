@@ -1,4 +1,5 @@
 import * as Icons from "./svg";
+import { PopoutMore } from "src/components/__popouts";
 
 export default [
   {
@@ -12,7 +13,7 @@ export default [
     icon: <Icons.IconDirty />,
   },
   {
-    id: "dirty",
+    id: "profile",
     title: "Профиль",
     icon: <Icons.IconProfile />,
   },
@@ -22,7 +23,7 @@ export default [
     icon: <Icons.IconShop />,
   },
   {
-    id: "more",
+    popout: <PopoutMore />,
     title: "Еще",
     icon: <Icons.IconMore />,
   },

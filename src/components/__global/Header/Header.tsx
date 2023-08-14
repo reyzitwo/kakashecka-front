@@ -10,7 +10,7 @@ import "./Header.scss";
 const Header: FC<Props> = ({ size = "small", badge, className, children }) => {
   return (
     <div className={clsx("Header", `Header_size_${size}`, className)}>
-      {children} {badge && <Badge>{badge}</Badge>}
+      {children} {badge !== undefined && <Badge>{badge}</Badge>}
     </div>
   );
 };

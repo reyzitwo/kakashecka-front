@@ -6,9 +6,12 @@ interface User {
   avatar: string;
 }
 
-type topI = null | Array<User>;
+interface topI {
+  referrals: Array<User>;
+  count: number;
+}
 
-const _ = atom<topI>({
+const _ = atom<topI | null>({
   key: "invitedStorage",
   default: null,
 });

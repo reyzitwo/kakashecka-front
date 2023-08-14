@@ -1,3 +1,5 @@
+return;
+
 const fs = require("fs");
 const path = require("path");
 const watch = require("watch");
@@ -65,7 +67,7 @@ function generateComponentFileContent2(componentName) {
   return `import "./${componentName}.scss"
 
 const ${componentName} = () => {
-    return <div className={componentName}></div>
+    return <div className={"${componentName}"}></div>
 }
 
 export default ${componentName};

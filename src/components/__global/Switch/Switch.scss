@@ -1,0 +1,33 @@
+.Switch {
+  width: 36px;
+  padding: 4px;
+  background-color: #f3f5f8;
+  border-radius: 111px;
+  z-index: 10;
+  position: relative;
+
+  .Switch__round {
+    position: relative;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background-color: white;
+    transition: var(--transition);
+
+    margin: 4px;
+
+    &::after {
+      position: absolute;
+      height: 16px;
+      width: 16px;
+      top: -4px;
+      bottom: -4px;
+      left: -4px;
+      right: -4px;
+      background: var(--color_green);
+      content: "";
+      border-radius: 16px;
+      z-index: -1;
+    }
+  }
+}

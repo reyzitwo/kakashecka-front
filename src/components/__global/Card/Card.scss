@@ -1,4 +1,8 @@
 .Card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   border-radius: 10px;
   background: #f5f7f9;
 

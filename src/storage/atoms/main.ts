@@ -1,9 +1,15 @@
 import { atom } from "recoil";
 
+export type snackbarType = {
+  status: "error" | "success" | "warning";
+  text: string;
+} | null;
+
 interface mainI {
   isDesktop: boolean;
   platform: string;
   closingAlert: boolean;
+  snackbar: snackbarType;
 }
 
 const _ = atom<mainI>({
@@ -12,6 +18,7 @@ const _ = atom<mainI>({
     isDesktop: false,
     platform: "",
     closingAlert: false,
+    snackbar: null,
   },
 });
 

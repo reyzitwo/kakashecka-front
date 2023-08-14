@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useRouterBack } from "@kokateam/router-vkminiapps";
@@ -15,13 +15,31 @@ import { main } from "src/storage/atoms";
 
 import "./Alert.scss";
 
-const Alert: FC<Props> = ({ header, className, children }) => {
+const Alert: FC<Props> = ({
+  id,
+  header,
+  isBack,
+  isDebounce,
+  className,
+  children,
+}) => {
   const [state, setState] = useRecoilState(main);
   const toBack = useRouterBack();
 
   const timeout = state.platform === "ios" ? 300 : 200;
 
+  const [debounce, setDebounce] = useState(!isDebounce);
+
   useEffect(() => {
+    document.getElementsByClassName(
+      "vkuiPopoutRoot__popout PopoutRoot__popout"
+    )[0].id = id;
+
+    // костыль, алерт дергается из-за смены его положения
+    setTimeout(() => {
+      setDebounce(true);
+    }, 1);
+
     return () => {
       setState((prev) => ({ ...prev, closingAlert: false }));
     };
@@ -38,22 +56,26 @@ const Alert: FC<Props> = ({ header, className, children }) => {
 
   return (
     <PopoutWrapper closing={state.closingAlert} onClick={closeAlert}>
-      <div
-        className={clsx("Alert", [
-          state.closingAlert && "vkuiAlert--closing",
-          className,
-        ])}
-      >
-        <Header size={"medium"} className={"Alert__header"}>
-          {header}
+      {debounce && (
+        <div
+          className={clsx("Alert", [
+            state.closingAlert && "vkuiAlert--closing",
+            className,
+          ])}
+        >
+          <Header size={"medium"} className={"Alert__header"}>
+            {header}
 
-          <div onClick={closeAlert} className={"Alert__close"}>
-            <Icon24Dismiss />
-          </div>
-        </Header>
+            {isBack && (
+              <div onClick={closeAlert} className={"Alert__close"}>
+                <Icon24Dismiss />
+              </div>
+            )}
+          </Header>
 
-        <div className={"Alert__content"}>{children}</div>
-      </div>
+          <div className={"Alert__content"}>{children}</div>
+        </div>
+      )}
     </PopoutWrapper>
   );
 };

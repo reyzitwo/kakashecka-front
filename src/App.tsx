@@ -13,11 +13,13 @@ import { SnackbarProvider } from "./components/__global";
 import Navigation from "./Navigation";
 
 import bridge from "@vkontakte/vk-bridge";
-import main from "./storage/atoms/main";
+import { API } from "src/modules";
+import { main, user } from "./storage/atoms";
 
 const App = withAdaptivity(
   ({ viewWidth }) => {
     const [, updateMainCoil] = useRecoilState(main);
+    const [, setStateUser] = useRecoilState(user);
 
     const platform = usePlatform();
 
@@ -27,7 +29,7 @@ const App = withAdaptivity(
         "desktop_web";
 
     useEffect(() => {
-      bridge.send("VKWebAppInit").then(() => console.log("VKWebAppInit"));
+      getUser();
 
       updateMainCoil((prev) => ({
         ...prev,
@@ -35,6 +37,15 @@ const App = withAdaptivity(
         platform,
       }));
     }, []);
+
+    const getUser = () => {
+      bridge.send("VKWebAppGetUserInfo").then(async (res) => {
+        let userInfo = await new API().initialize();
+        setStateUser({ ...userInfo, user_id: res.id });
+      });
+
+      bridge.send("VKWebAppInit").then(() => console.log("VKWebAppInit"));
+    };
 
     return (
       <ConfigProvider
@@ -44,9 +55,9 @@ const App = withAdaptivity(
         platform={isDesktop ? "android" : platform}
       >
         <AppearanceProvider appearance={"light"}>
-          <AppRoot mode="full" className={isDesktop ? "desktop" : "mobile"}>
+          <AppRoot mode="full" className={"mobile"}>
             <SnackbarProvider>
-              <Navigation isDesktop={isDesktop} />
+              <Navigation isDesktop={false} />
             </SnackbarProvider>
           </AppRoot>
         </AppearanceProvider>
