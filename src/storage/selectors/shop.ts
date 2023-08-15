@@ -7,7 +7,7 @@ export const SelectorShopInventory = selector({
     const state = get(_);
     if (!state) return null;
     const filteredItems = state?.flatMap((itemGroup) =>
-      itemGroup.items.filter((item) => item.count > 0)
+      itemGroup.items.filter((item) => item.count > 0 && item.id !== 4)
     );
 
     return filteredItems;
