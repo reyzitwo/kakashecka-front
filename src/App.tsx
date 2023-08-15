@@ -38,15 +38,12 @@ const App = withAdaptivity(
       }));
     }, []);
 
-    const getUser = () => {
+    const getUser = async () => {
       const referrer_id = Number(window.location.href.split("#")[1]);
-
-      bridge.send("VKWebAppGetUserInfo").then(async (res) => {
-        let userInfo = await new API().initialize(
-          referrer_id ? { referrer_id: referrer_id } : undefined
-        );
-        setStateUser({ ...userInfo, user_id: res.id });
-      });
+      let userInfo = await new API().initialize(
+        referrer_id ? { referrer_id: referrer_id } : undefined
+      );
+      setStateUser(userInfo);
 
       bridge.send("VKWebAppInit").then(() => console.log("VKWebAppInit"));
     };
