@@ -39,8 +39,12 @@ const App = withAdaptivity(
     }, []);
 
     const getUser = () => {
+      const referrer_id = Number(window.location.href.split("#")[1]);
+
       bridge.send("VKWebAppGetUserInfo").then(async (res) => {
-        let userInfo = await new API().initialize();
+        let userInfo = await new API().initialize(
+          referrer_id ? { referrer_id: referrer_id } : undefined
+        );
         setStateUser({ ...userInfo, user_id: res.id });
       });
 
