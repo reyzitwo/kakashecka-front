@@ -8,7 +8,6 @@ export type InitializeResponse = UserConstant & ProfileConstant;
 export type ProfileResponse = ProfileConstant;
 
 export interface DirtyUsersPostResponse extends UserConstant {
-  user_id: number;
   amount_of_paper: number;
   claim_available: boolean;
 }
