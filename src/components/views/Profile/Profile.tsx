@@ -8,7 +8,7 @@ import { Icon24Gift, Icon24Add } from "@vkontakte/icons";
 import { ImgToiletPaper } from "src/assets/img";
 import * as Icons from "./svg";
 
-import { user, shop } from "src/storage/atoms";
+import { user, shop, dirtyUsers } from "src/storage/atoms";
 import { SelectorShopInventory } from "src/storage/selectors/shop";
 import { SelectorSnackbar } from "src/storage/selectors/main";
 import { API, generateHash, sleep, declOfNum } from "src/modules";
@@ -25,7 +25,9 @@ const Profile = () => {
   const [stateUser, setUser] = useRecoilState(user);
   const [shopState, setShopState] = useRecoilState(shop);
   const [stateInventory, setInventory] = useRecoilState(SelectorShopInventory);
+  const [stateDirty, setDirty] = useRecoilState(dirtyUsers);
   const [, setSnackbar] = useRecoilState(SelectorSnackbar);
+
   const [animateImg, setAnimateImg] = useState(false);
 
   const avatarRef = useRef<HTMLImageElement>(null);
@@ -37,9 +39,19 @@ const Profile = () => {
     getShopItems();
   }, []);
 
+  useEffect(() => {
+    if (stateDirty) return;
+    getDirtyUsers();
+  }, []);
+
   const getShopItems = async () => {
     let items = await api.shopItems.get();
     setShopState(items);
+  };
+
+  const getDirtyUsers = async () => {
+    let items = await api.dirtyUsers.get();
+    setDirty(items);
   };
 
   const useItem = async (item: { id: number }, index: number) => {
@@ -130,14 +142,7 @@ const Profile = () => {
     let response = await api.ads.watch(hash);
 
     if (response) {
-      setSnackbar({
-        status: "success",
-        text: `Вы заработали ${declOfNum(
-          response.toilet_paper - stateUser.toilet_paper,
-          ["туалетную бумагу", "туалетные бумаги", "туалетных бумаг"]
-        )}`,
-      });
-      setUser({ ...stateUser, toilet_paper: response.toilet_paper });
+      snackbarEarn(response.toilet_paper);
     } else {
       setSnackbar({
         status: "error",
@@ -162,6 +167,37 @@ const Profile = () => {
         return 240 + ((percentage - 50) / 50) * (462 - 240);
       }
     }
+  };
+
+  const claimAllPaper = async () => {
+    await bridge.send("VKWebAppShowNativeAds", {
+      ad_format: EAdsFormats.REWARD,
+    });
+
+    const hash = await generateHash();
+    let response = await api.dirtyUsers.dirtyUsersClaimAll({
+      hmac: hash.hmac,
+      ts: hash.ts,
+    });
+
+    if (response) {
+      snackbarEarn(response.toilet_paper);
+    } else {
+      setSnackbar({ status: "error", text: "Попробуйте позже" });
+    }
+  };
+
+  const snackbarEarn = (toilet_paper: number) => {
+    setSnackbar({
+      status: "success",
+      text: `Вы заработали ${declOfNum(toilet_paper - stateUser.toilet_paper, [
+        "туалетную бумагу",
+        "туалетные бумаги",
+        "туалетных бумаг",
+      ])}`,
+    });
+
+    setUser({ ...stateUser, toilet_paper: toilet_paper });
   };
 
   return (
@@ -292,7 +328,57 @@ const Profile = () => {
         header={{ text: "Вы испачкали", mode: "left", background: "blue" }}
         className={"Profile__Group-Users"}
       >
-        <Placeholder>У вас нет испачканных пользователей</Placeholder>
+        <Button
+          background={"gray"}
+          onClick={claimAllPaper}
+          className={"DirtyUsers__button-claim-all"}
+        >
+          Собрать все <Badge color={"blue"}>AD</Badge>
+        </Button>
+
+        {stateDirty ? (
+          stateDirty.length === 0 ? (
+            <Placeholder>У вас нет испачканных пользователей</Placeholder>
+          ) : (
+            stateDirty.map((element) => (
+              <Cell
+                key={element.id}
+                after={
+                  <Button
+                    disabled={!element.claim_available}
+                    background={"green"}
+                    onClick={async () => {
+                      let response = await api.dirtyUsers.dirtyUsers(
+                        {},
+                        element.id
+                      );
+                      if (response) {
+                        snackbarEarn(response.toilet_paper);
+                      } else {
+                        setSnackbar({
+                          status: "error",
+                          text: "Попробуйте позже",
+                        });
+                      }
+                    }}
+                    className={
+                      !element.claim_available ? "DirtyUser__disabled" : ""
+                    }
+                  >
+                    {element.amount_of_paper}{" "}
+                    <img src={ImgToiletPaper} alt={""} /> /час
+                  </Button>
+                }
+                avatar={element.avatar}
+                textSize={2}
+              >
+                {element.name}
+              </Cell>
+            ))
+          )
+        ) : (
+          <Spinner />
+        )}
       </Group>
     </>
   );

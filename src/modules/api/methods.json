@@ -19,6 +19,10 @@
     "dirtyUsers": {
       "endpoint": "dirty-users/claim/{value}",
       "method": "POST"
+    },
+    "dirtyUsersClaimAll": {
+      "endpoint": "dirty-users/claim",
+      "method": "POST"
     }
   },
   "theft": {
