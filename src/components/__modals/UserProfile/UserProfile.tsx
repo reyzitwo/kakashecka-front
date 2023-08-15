@@ -8,8 +8,8 @@ import { ImgToiletPaper, SvgDirty } from "src/assets/img";
 
 import Props from "../modal.interface";
 
-import { API } from "src/modules";
-import { user } from "src/storage/atoms";
+import { API, declOfNum } from "src/modules";
+import { dirtyUsers, user } from "src/storage/atoms";
 import { SelectorSnackbar } from "src/storage/selectors/main";
 
 import "./UserProfile.scss";
@@ -20,22 +20,42 @@ const UserProfile: FC<Props> = ({ id, onClose }) => {
 
   const [state] = useState(dataRouter);
   const [stateUser, setStateUser] = useRecoilState(user);
+  const [stateDirty, setDirty] = useRecoilState(dirtyUsers);
   const [, setSnackbar] = useRecoilState(SelectorSnackbar);
 
   const theft = async () => {
     const response = await api.theft({ user_id: state.user_id });
     if (!response) {
-      return setSnackbar({ status: "error", text: "Ошибка" });
+      return setSnackbar({ status: "error", text: "Ошибка, попробуйте позже" });
     }
 
+    setSnackbar({
+      status: "success",
+      text: `Вы успешно украли ${declOfNum(
+        response.toilet_paper - stateUser.toilet_paper,
+        ["туалетную бумагу", "туалетные бумаги", "туалетных бумаг"]
+      )}`,
+    });
     setStateUser({ ...stateUser, toilet_paper: response.toilet_paper });
   };
 
   const dirty = async () => {
     const response = await api.dirtyUsers.dirty({ user_id: state.user_id });
     if (!response) {
-      return setSnackbar({ status: "error", text: "Ошибка" });
+      const errosMessage =
+        // @ts-ignore
+        response.errorCode === 4
+          ? "Недостаточно какашек"
+          : "Пользователь уже запачкан";
+
+      return setSnackbar({
+        status: "error",
+        text: errosMessage,
+      });
     }
+
+    setDirty(stateDirty ? [...stateDirty, response] : null);
+    setSnackbar({ status: "success", text: "Успешно!" });
   };
 
   return (
