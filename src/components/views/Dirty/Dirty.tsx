@@ -2,9 +2,9 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { useEffect } from "react";
 import { useRouterModal } from "@kokateam/router-vkminiapps";
 
+import { Placeholder } from "@vkontakte/vkui";
 import { Button, Cell, Header, Spinner } from "src/components/__global";
-import { Icon24UserAdd, Icon12Clock } from "@vkontakte/icons";
-import ImgToiletPaper from "src/assets/img/toilet_paper.png";
+import { Icon24UserAdd, Icon12Clock, Icon20Story } from "@vkontakte/icons";
 
 import bridge from "@vkontakte/vk-bridge";
 import { user, invited } from "src/storage/atoms";
@@ -12,7 +12,6 @@ import { SelectorSnackbar } from "src/storage/selectors/main";
 import { API } from "src/modules";
 
 import "./Dirty.scss";
-import { Placeholder } from "@vkontakte/vkui";
 
 const Dirty = () => {
   const [, toModal] = useRouterModal();
@@ -80,17 +79,17 @@ const Dirty = () => {
           state.referrals.map((element) => (
             <Cell
               key={element.id}
-              onClick={() =>
-                window.open(`https://vk.com/id${element.id}`, "_href")
-              }
-              before={<div className={"Top-Place"}>{element.id}</div>}
               after={
-                <div className={"Top-Balance"}>
-                  {/*(232332).toLocaleString("ru")*/}
-                  <img src={ImgToiletPaper} alt={""} />
-                </div>
+                <Button
+                  onClick={() => {
+                    toModal("shareStories", "referral_player");
+                  }}
+                  className={"Dirty__button-share-user"}
+                >
+                  <Icon20Story />
+                </Button>
               }
-              avatar={"1"}
+              avatar={element.avatar}
               textSize={2}
             >
               {element.name}
