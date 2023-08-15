@@ -10,7 +10,7 @@ interface storiesI {
 }
 
 const _ = atom<storiesI>({
-  key: "stories",
+  key: "storiesStorage",
   default: {
     active: 1,
     templates: {
