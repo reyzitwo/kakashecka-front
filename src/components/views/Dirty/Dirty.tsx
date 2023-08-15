@@ -37,7 +37,9 @@ const Dirty = () => {
       .send("VKWebAppCopyText", {
         text: `https://vk.com/app51710990#${userInfo.user_id}`,
       })
-      .then(() => setSnackbar({ status: "error", text: "Успешно!" }));
+      .then(() =>
+        setSnackbar({ status: "success", text: "Ссылка скопирована" })
+      );
   };
 
   return (
@@ -84,7 +86,7 @@ const Dirty = () => {
               before={<div className={"Top-Place"}>{element.id}</div>}
               after={
                 <div className={"Top-Balance"}>
-                  {(232332).toLocaleString("ru")}
+                  {/*(232332).toLocaleString("ru")*/}
                   <img src={ImgToiletPaper} alt={""} />
                 </div>
               }
