@@ -83,27 +83,27 @@ const Profile = () => {
     itemsInventoryRefs.current[
       index
     ].style.transform = `translate(${delta.x}px, ${delta.y}px)`;
-    await sleep(1000);
+    await sleep(500);
 
     itemsInventoryRefs.current[
       index
-    ].style.transition = `transform 500ms ease-in-out`;
+    ].style.transition = `transform 250ms ease-in-out`;
     itemsInventoryRefs.current[index].style.transform = `translate(${
       delta.x - 40
     }px, ${delta.y}px)`;
-    await sleep(500);
+    await sleep(250);
 
     itemsInventoryRefs.current[index].style.transform = `translate(${
       delta.x + 40
     }px, ${delta.y}px)`;
-    await sleep(500);
+    await sleep(250);
 
     itemsInventoryRefs.current[
       index
-    ].style.transition = `transform 1s ease-in-out`;
+    ].style.transition = `transform 500ms ease-in-out`;
     itemsInventoryRefs.current[index].style.transform = "translate(0, 0)";
 
-    await sleep(1000);
+    await sleep(500);
 
     setAnimateImg(false);
     return true;
