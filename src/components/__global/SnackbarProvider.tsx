@@ -30,7 +30,7 @@ export default function SnackbarProvider({ children }: SnackbarProviderI) {
         <Snackbar
           before={icons[state.status]}
           onClose={() => setState(null)}
-          duration={60 * 1000}
+          duration={5 * 1000}
         >
           {state.text}
         </Snackbar>
