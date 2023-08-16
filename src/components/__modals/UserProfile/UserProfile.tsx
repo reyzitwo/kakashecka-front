@@ -9,7 +9,7 @@ import { ImgToiletPaper, SvgDirty } from "src/assets/img";
 import Props from "../modal.interface";
 
 import { API, declOfNum } from "src/modules";
-import { dirtyUsers, user } from "src/storage/atoms";
+import { dirtyUsers, user, top } from "src/storage/atoms";
 import { SelectorSnackbar } from "src/storage/selectors/main";
 
 import "./UserProfile.scss";
@@ -18,7 +18,8 @@ const UserProfile: FC<Props> = ({ id, onClose }) => {
   const dataRouter = useRouterData();
   const api = new API();
 
-  const [state] = useState(dataRouter);
+  const [state, setState] = useState(dataRouter);
+  const [stateTop, setTop] = useRecoilState(top);
   const [stateUser, setStateUser] = useRecoilState(user);
   const [stateDirty, setDirty] = useRecoilState(dirtyUsers);
   const [, setSnackbar] = useRecoilState(SelectorSnackbar);
@@ -28,6 +29,24 @@ const UserProfile: FC<Props> = ({ id, onClose }) => {
     if (!response) {
       return setSnackbar({ status: "error", text: "Ошибка, попробуйте позже" });
     }
+
+    const tops = { balance: null, contamination: null, purity: null };
+    const currentUserPaper =
+      state.toilet_paper - (response.toilet_paper - stateUser.toilet_paper);
+
+    // @ts-ignore
+    Object.keys(tops).map((el: typeof stateTop.activeTab) => {
+      //@ts-ignore
+      tops[el] = updateToiletPaperById(
+        el,
+        state.id,
+        currentUserPaper,
+        response.toilet_paper
+      );
+    });
+
+    setTop({ ...stateTop, ...tops });
+    setState({ ...state, toilet_paper: currentUserPaper });
 
     setSnackbar({
       status: "success",
@@ -56,6 +75,40 @@ const UserProfile: FC<Props> = ({ id, onClose }) => {
 
     setDirty(stateDirty ? [...stateDirty, response] : null);
     setSnackbar({ status: "success", text: "Успешно!" });
+  };
+
+  const updateToiletPaperById = (
+    tab: typeof stateTop.activeTab,
+    userId: number,
+    newToiletPaper: number,
+    newToilerPaperUser: number
+  ) => {
+    if (!stateTop[tab]) return null;
+
+    const updatedTop = stateTop[tab]?.map((user) => {
+      if (user.id === userId) {
+        return {
+          ...user,
+          toilet_paper: newToiletPaper,
+        };
+      }
+
+      if (user.id === stateUser.id) {
+        return {
+          ...user,
+          toilet_paper: newToilerPaperUser,
+        };
+      }
+
+      return user;
+    });
+
+    if (tab === "balance" && updatedTop) {
+      // Сортировка пользователей по toilet_paper в порядке убывания
+      updatedTop.sort((a, b) => b.toilet_paper - a.toilet_paper);
+    }
+
+    return updatedTop;
   };
 
   return (
