@@ -82,3 +82,8 @@ symbol[id="error_circle_fill_red_24"] {
     fill: #fd5e5e;
   }
 }
+
+.vkuiSnackbar_padding {
+  bottom: calc(82px + 20px); // height tabbar + margin
+  transition: bottom 0.3s ease;
+}
