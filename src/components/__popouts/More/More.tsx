@@ -1,21 +1,19 @@
-import { useState } from "react";
+import { useRecoilState } from "recoil";
 
 import { Alert, Cell, Switch } from "src/components/__global";
 import * as Icons from "./svg";
 
-import bridge from "@vkontakte/vk-bridge";
+import { API } from "src/modules";
+import { user } from "src/storage/atoms";
 
 import "./More.scss";
 
 const More = ({}) => {
-  const [notifications, setNotification] = useState(false);
+  const [notifications, setNotification] = useRecoilState(user);
 
   const toggleNotifications = (value: boolean) => {
-    bridge
-      .send(value ? "VKWebAppAllowNotifications" : "VKWebAppDenyNotifications")
-      .then(() => {
-        setNotification(value);
-      });
+    new API().profile.patch({ notifications: value });
+    setNotification({ ...notifications, notifications: value });
   };
 
   return (
@@ -27,7 +25,12 @@ const More = ({}) => {
       <Cell
         before={<Icons.Notifications />}
         subheader={"Всплывающие уведомления"}
-        after={<Switch value={notifications} onToggle={toggleNotifications} />}
+        after={
+          <Switch
+            value={notifications.notifications}
+            onToggle={toggleNotifications}
+          />
+        }
       >
         Уведомления
       </Cell>

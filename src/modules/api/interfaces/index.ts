@@ -1,6 +1,13 @@
 import * as Params from "src/modules/api/interfaces/params";
 import * as Response from "src/modules/api/interfaces/response";
 
+interface APIProfile {
+  get(): Promise<Response.ProfileGetResponse>;
+  patch(
+    params: Params.ProfilePatchParams
+  ): Promise<Response.ProfilePatchResponse>;
+}
+
 interface APIDirtyUsers {
   get(): Promise<Response.DirtyUsersGetResponse>;
   dirty(
@@ -51,7 +58,7 @@ export default interface APIProps {
   initialize(
     params?: Params.InitializeParams
   ): Promise<Response.InitializeResponse>;
-  profile(): Promise<Response.ProfileResponse>;
+  profile: APIProfile;
   dirtyUsers: APIDirtyUsers;
   theft(params: Params.TheftParams): Promise<Response.TheftResponse>;
   referrals(): Promise<Response.ReferralsResponse>;

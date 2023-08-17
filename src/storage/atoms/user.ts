@@ -8,6 +8,7 @@ interface UserI {
   contamination: number;
   poop_count: number;
   toilet_paper: number;
+  notifications: boolean;
 }
 
 const _ = atom<UserI>({
@@ -20,6 +21,7 @@ const _ = atom<UserI>({
     contamination: 0,
     poop_count: 0,
     toilet_paper: 0,
+    notifications: false,
   },
 });
 

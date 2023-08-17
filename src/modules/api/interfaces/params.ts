@@ -2,7 +2,9 @@ export interface InitializeParams {
   referrer_id?: number;
 }
 
-export interface ProfileParams {}
+export interface ProfilePatchParams {
+  notifications: boolean;
+}
 
 export interface DirtyUsersGetParams {}
 

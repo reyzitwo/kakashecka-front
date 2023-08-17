@@ -4,8 +4,14 @@
     "method": "POST"
   },
   "profile": {
-    "endpoint": "profile",
-    "method": "GET"
+    "get": {
+      "endpoint": "profile",
+      "method": "GET"
+    },
+    "patch": {
+      "endpoint": "profile",
+      "method": "PATCH"
+    }
   },
   "dirtyUsers": {
     "get": {

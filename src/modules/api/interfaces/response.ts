@@ -3,9 +3,14 @@ import {
   ProfileConstant,
 } from "src/modules/api/interfaces/constants";
 
-export type InitializeResponse = UserConstant & ProfileConstant;
+export type InitializeResponse = UserConstant &
+  ProfileConstant & { notifications: boolean };
 
-export type ProfileResponse = ProfileConstant;
+export type ProfileGetResponse = ProfileConstant;
+
+export interface ProfilePatchResponse {
+  notifications: boolean;
+}
 
 export interface DirtyUsersPostResponse extends UserConstant {
   amount_of_paper: number;
