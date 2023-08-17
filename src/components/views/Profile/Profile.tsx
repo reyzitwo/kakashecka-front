@@ -170,21 +170,26 @@ const Profile = () => {
   };
 
   const claimAllPaper = async () => {
-    await bridge.send("VKWebAppShowNativeAds", {
-      ad_format: EAdsFormats.REWARD,
-    });
+    bridge
+      .send("VKWebAppShowNativeAds", {
+        ad_format: EAdsFormats.REWARD,
+      })
+      .then(async () => {
+        const hash = await generateHash();
+        let response = await api.dirtyUsers.dirtyUsersClaimAll({
+          hmac: hash.hmac,
+          ts: hash.ts,
+        });
 
-    const hash = await generateHash();
-    let response = await api.dirtyUsers.dirtyUsersClaimAll({
-      hmac: hash.hmac,
-      ts: hash.ts,
-    });
-
-    if (response) {
-      snackbarEarn(response.toilet_paper);
-    } else {
-      setSnackbar({ status: "error", text: "Попробуйте позже" });
-    }
+        if (response) {
+          snackbarEarn(response.toilet_paper);
+        } else {
+          setSnackbar({ status: "error", text: "Попробуйте позже" });
+        }
+      })
+      .catch(() =>
+        setSnackbar({ status: "error", text: "Нет доступной рекламы" })
+      );
   };
 
   const snackbarEarn = (toilet_paper: number) => {
@@ -330,6 +335,7 @@ const Profile = () => {
       >
         <Button
           background={"gray"}
+          disabled={!stateDirty || stateDirty.length === 0}
           onClick={claimAllPaper}
           className={"DirtyUsers__button-claim-all"}
         >
