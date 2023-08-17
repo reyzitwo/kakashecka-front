@@ -18,6 +18,10 @@ const MobileNavigation = () => {
               return toPopout(el.popout);
             }
 
+            if (view === el.id) {
+              return window.scrollTo(0, 0);
+            }
+
             toView(el.id);
           }}
           key={key}
