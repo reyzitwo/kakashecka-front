@@ -15,8 +15,6 @@ export default function generateHash(payload = "") {
         payload,
       })
       .then((data) => {
-        console.info(`[generateHash()] ${JSON.stringify(data)}`);
-
         const hmac = Base64.stringify(
           hmacSHA512(
             `${
