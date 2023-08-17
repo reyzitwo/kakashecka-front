@@ -81,8 +81,16 @@
       }
     }
 
-    .Button img {
-      height: 14px;
+    .Button {
+      position: absolute;
+      right: 0;
+      left: 0;
+      margin: 0 auto;
+      width: fit-content;
+
+      img {
+        height: 14px;
+      }
     }
   }
 }
