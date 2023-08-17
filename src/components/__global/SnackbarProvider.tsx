@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { useRouterModal } from "@kokateam/router-vkminiapps";
 
 import { Snackbar } from "@vkontakte/vkui";
@@ -9,7 +9,6 @@ import {
 } from "@vkontakte/icons";
 
 import { SelectorSnackbar } from "src/storage/selectors/main";
-import { user } from "src/storage/atoms";
 
 interface SnackbarProviderI {
   children: ReactNode;
@@ -23,15 +22,13 @@ const icons = {
 
 export default function SnackbarProvider({ children }: SnackbarProviderI) {
   const [modal] = useRouterModal();
-
-  const userInfo = useRecoilValue(user);
   const [state, setState] = useRecoilState(SelectorSnackbar);
 
   return (
     <>
       {children}
 
-      {state && userInfo.notifications && (
+      {state && (
         <Snackbar
           before={icons[state.status]}
           onClose={() => setState(null)}

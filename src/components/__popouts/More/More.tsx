@@ -3,7 +3,9 @@ import { useRecoilState } from "recoil";
 import { Alert, Cell, Switch } from "src/components/__global";
 import * as Icons from "./svg";
 
+import bridge from "@vkontakte/vk-bridge";
 import { API } from "src/modules";
+
 import { user } from "src/storage/atoms";
 
 import "./More.scss";
@@ -11,8 +13,12 @@ import "./More.scss";
 const More = ({}) => {
   const [notifications, setNotification] = useRecoilState(user);
 
-  const toggleNotifications = (value: boolean) => {
-    new API().profile.patch({ notifications: value });
+  const toggleNotifications = async (value: boolean) => {
+    await bridge.send(
+      value ? "VKWebAppAllowNotifications" : "VKWebAppDenyNotifications"
+    );
+
+    await new API().profile.patch({ notifications: value });
     setNotification({ ...notifications, notifications: value });
   };
 
