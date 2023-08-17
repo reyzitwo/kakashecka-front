@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { useRouterModal } from "@kokateam/router-vkminiapps";
 
 import { Button, Spinner, Cell } from "src/components/__global";
-import ImgToiletPaper from "src/assets/img/toilet_paper.png";
+import ImgToiletPaper from "src/assets/img/toilet_paper.webp";
 
 import { top } from "src/storage/atoms";
 import { API } from "src/modules";

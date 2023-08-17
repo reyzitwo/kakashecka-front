@@ -2,7 +2,7 @@ import { FC } from "react";
 import { clsx } from "clsx";
 
 import { Button } from "../";
-import ImgToiletPaper from "src/assets/img/toilet_paper.png";
+import ImgToiletPaper from "src/assets/img/toilet_paper.webp";
 
 import Props from "./Card.interface";
 

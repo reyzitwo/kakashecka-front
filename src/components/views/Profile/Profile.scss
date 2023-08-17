@@ -18,7 +18,7 @@
   }
 
   &:before {
-    background-image: url(./img/background_1.png);
+    background-image: url(./img/background_1.webp);
   }
 
   .vkuiAvatar {
@@ -35,7 +35,7 @@
     bottom: 0;
     z-index: -1;
 
-    background: url(./img/test.png) repeat-x;
+    background: url(./img/background_2.webp) repeat-x;
     width: calc(420px * 5);
 
     transition: all 4s ease;
