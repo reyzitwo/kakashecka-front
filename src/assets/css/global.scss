@@ -42,9 +42,12 @@ body {
   position: fixed;
 }
 
-// padding для возможности проскроллить таббар
-.vkuiPanel {
-  padding-bottom: 74px;
+.vkuiEpic .vkuiPanel__in {
+  --tabbar_height: 74px;
+
+  padding-bottom: calc(
+    var(--safe-area-inset-bottom) + var(--tabbar_height) + 20px
+  );
 }
 
 body,
