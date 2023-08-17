@@ -111,11 +111,23 @@ const UserProfile: FC<Props> = ({ id, onClose }) => {
     return updatedTop;
   };
 
+  const openVKProfile = (user_id: number) => {
+    window.open(`https://vk.com/id${user_id}`);
+  };
+
   return (
     <ModalCard
       id={id}
-      icon={<Avatar src={state?.avatar} size={80} />}
-      header={state?.name}
+      icon={
+        <Avatar
+          src={state?.avatar}
+          size={80}
+          onClick={() => openVKProfile(state.user_id)}
+        />
+      }
+      header={
+        <div onClick={() => openVKProfile(state.user_id)}>{state?.name}</div>
+      }
       subheader={`ID: ${state?.id}`}
       actions={
         state.id !== stateUser.id && (

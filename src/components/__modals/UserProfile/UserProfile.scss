@@ -1,4 +1,9 @@
 .vkuiModalCard[id="userProfile"] {
+  .vkuiAvatar,
+  .vkuiModalCardBase__header {
+    cursor: pointer;
+  }
+
   .Button {
     width: 50%;
     color: white;
