@@ -237,6 +237,20 @@ const Profile = () => {
                 alt={""}
               />
             }
+            onClick={() => {
+              const indexElement = stateInventory.findIndex(
+                (item: { sectionId: number }) => item.sectionId === 1
+              );
+
+              if (indexElement === -1) {
+                return setSnackbar({
+                  status: "error",
+                  text: "У вас нет вещей чтобы помыться",
+                });
+              }
+
+              useItem({ id: stateInventory[indexElement].id }, indexElement);
+            }}
           >
             Помыться
           </Button>

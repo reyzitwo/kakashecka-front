@@ -1,13 +1,17 @@
 import { selector } from "recoil";
 import _ from "src/storage/atoms/shop";
+import { ShopItemsGetResponse } from "src/modules/api/interfaces/response.ts";
 
-export const SelectorShopInventory = selector({
+// @ts-ignore
+export const SelectorShopInventory = selector<ShopItemsGetResponse["items"]>({
   key: "getShopInventory",
   get: ({ get }) => {
     const state = get(_);
     if (!state) return null;
     const filteredItems = state?.flatMap((itemGroup) =>
-      itemGroup.items.filter((item) => item.count > 0 && item.id !== 4)
+      itemGroup.items
+        .filter((item) => item.count > 0 && item.id !== 4)
+        .map((item) => ({ ...item, sectionId: itemGroup.id }))
     );
 
     return filteredItems;
@@ -27,8 +31,6 @@ export const SelectorShopInventory = selector({
       }
       return { ...itemGroup, items: newItemGroup };
     });
-
-    console.log(newState);
 
     // @ts-ignore
     set(_, newState);
