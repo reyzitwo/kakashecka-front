@@ -35,14 +35,14 @@ const Profile = () => {
   const waveRef = useRef<HTMLImageElement>();
 
   useEffect(() => {
-    if (shopState) return;
+    if (shopState || stateUser.name === "") return;
     getShopItems();
-  }, []);
+  }, [stateUser.name]);
 
   useEffect(() => {
-    if (stateDirty) return;
+    if (stateDirty || stateUser.name === "") return;
     getDirtyUsers();
-  }, []);
+  }, [stateUser.name]);
 
   const getShopItems = async () => {
     let items = await api.shopItems.get();
