@@ -1,5 +1,11 @@
 .Top-Tabs .Button {
+  width: 33%;
   margin-right: 7px;
+  white-space: break-spaces;
+
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 .Top-Place {

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useRouterModal } from "@kokateam/router-vkminiapps";
 
-import { HorizontalScroll } from "@vkontakte/vkui";
 import { Button, Spinner, Cell } from "src/components/__global";
 import ImgToiletPaper from "src/assets/img/toilet_paper.png";
 
@@ -39,24 +38,22 @@ const Top = () => {
 
   return (
     <>
-      <HorizontalScroll className={"Top-Tabs"}>
-        <div className={"flex Top-Tabs"}>
-          {Tabs.map((element) => (
-            <Button
-              key={element.id}
-              background={state.activeTab === element.id ? "orange" : "gray"}
-              disabled={state.activeTab === element.id}
-              onClick={() => {
-                handlerSetState({ activeTab: element.id });
-                // @ts-ignore
-                getUsers(element.id);
-              }}
-            >
-              {element.title}
-            </Button>
-          ))}
-        </div>
-      </HorizontalScroll>
+      <div className={"flex Top-Tabs"}>
+        {Tabs.map((element) => (
+          <Button
+            key={element.id}
+            background={state.activeTab === element.id ? "orange" : "gray"}
+            disabled={state.activeTab === element.id}
+            onClick={() => {
+              handlerSetState({ activeTab: element.id });
+              // @ts-ignore
+              getUsers(element.id);
+            }}
+          >
+            {element.title}
+          </Button>
+        ))}
+      </div>
 
       {state[state.activeTab] ? (
         // @ts-ignore, сверху проверка на null
