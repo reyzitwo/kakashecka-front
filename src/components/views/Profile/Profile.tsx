@@ -130,25 +130,26 @@ const Profile = () => {
       });
     }
 
-    await bridge
+    bridge
       .send("VKWebAppShowNativeAds", {
         ad_format: EAdsFormats.REWARD,
+      })
+      .then(async () => {
+        const hash = await generateHash();
+        let response = await api.ads.watch(hash);
+
+        if (response) {
+          snackbarEarn(response.toilet_paper);
+        } else {
+          setSnackbar({
+            status: "error",
+            text: "Попробуйте позже",
+          });
+        }
       })
       .catch(() =>
         setSnackbar({ status: "error", text: "Нет доступной рекламы" })
       );
-
-    const hash = await generateHash();
-    let response = await api.ads.watch(hash);
-
-    if (response) {
-      snackbarEarn(response.toilet_paper);
-    } else {
-      setSnackbar({
-        status: "error",
-        text: "Попробуйте позже",
-      });
-    }
   };
 
   const calculateHeightInPx = (percentage: number) => {
@@ -305,7 +306,7 @@ const Profile = () => {
         <Button
           before={<Icons.IconLive />}
           background={"white"}
-          onClick={() => toModal("earnPaper")}
+          onClick={() => toModal("earnPaper", watchAd)}
         >
           Заработать рулоны
         </Button>

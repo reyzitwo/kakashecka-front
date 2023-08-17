@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useRouterView } from "@kokateam/router-vkminiapps";
+import { useRouterView, useRouterData } from "@kokateam/router-vkminiapps";
 
 import { ModalCard } from "@vkontakte/vkui";
 import { Header, Banner, Button } from "src/components/__global";
@@ -10,6 +10,7 @@ import "./EarnPaper.scss";
 
 const EarnPaper: FC<Props> = ({ id, onClose }) => {
   const [, toView] = useRouterView();
+  const watchAd = useRouterData();
 
   const jumpView = (view: string) => {
     onClose();
@@ -32,7 +33,7 @@ const EarnPaper: FC<Props> = ({ id, onClose }) => {
           <Button
             size={"small"}
             className={"EarnPaper-Button"}
-            onClick={() => jumpView("profile")}
+            onClick={() => watchAd()}
           >
             Заработать
           </Button>
