@@ -49,7 +49,7 @@ const Shop = () => {
       {state ? (
         state.map((element) => (
           <>
-            <Header badge={4}>{element.title}</Header>
+            <Header badge={element.items.length}>{element.title}</Header>
             <div className={"Shop_markets"}>
               {element.items.map((element2) => (
                 <Card
