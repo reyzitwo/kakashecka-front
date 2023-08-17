@@ -32,7 +32,7 @@ export default function SnackbarProvider({ children }: SnackbarProviderI) {
         <Snackbar
           before={icons[state.status]}
           onClose={() => setState(null)}
-          duration={60 * 1000} // 5
+          duration={5 * 1000}
           className={modal || "vkuiSnackbar_padding"}
         >
           {state.text}
