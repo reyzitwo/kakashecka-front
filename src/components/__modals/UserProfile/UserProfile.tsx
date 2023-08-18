@@ -26,9 +26,7 @@ const UserProfile: FC<Props> = ({ id, onClose }) => {
 
   const theft = async () => {
     const response = await api.theft({ user_id: state.user_id });
-    if (!response) {
-      return setSnackbar({ status: "error", text: "Ошибка, попробуйте позже" });
-    }
+    if (!response) return;
 
     const tops = { balance: null, contamination: null, purity: null };
     const currentUserPaper =
@@ -60,18 +58,7 @@ const UserProfile: FC<Props> = ({ id, onClose }) => {
 
   const dirty = async () => {
     const response = await api.dirtyUsers.dirty({ user_id: state.user_id });
-    if (!response) {
-      const errosMessage =
-        // @ts-ignore
-        response.errorCode === 4
-          ? "Недостаточно какашек"
-          : "Пользователь уже запачкан";
-
-      return setSnackbar({
-        status: "error",
-        text: errosMessage,
-      });
-    }
+    if (!response) return;
 
     setDirty(stateDirty ? [...stateDirty, response] : null);
     setSnackbar({ status: "success", text: "Успешно!" });

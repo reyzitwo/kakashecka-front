@@ -25,12 +25,7 @@ const Buy: FC = ({}) => {
 
   const buyItem = async () => {
     let response = await new API().shopItems.buy({ count: count }, state.id);
-    if (!response) {
-      return setSnackbar({
-        status: "error",
-        text: "Недостатчно туалетной бумаги",
-      });
-    }
+    if (!response) return;
 
     setItemCount({ id: state.id, count: count });
     setUser({

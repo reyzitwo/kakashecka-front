@@ -20,11 +20,13 @@
     },
     "dirty": {
       "endpoint": "dirty-users",
-      "method": "POST"
+      "method": "POST",
+      "errors": { "2": "Этот пользователь уже был запачкан" }
     },
     "dirtyUsers": {
       "endpoint": "dirty-users/claim/{value}",
-      "method": "POST"
+      "method": "POST",
+      "errors": { "1": "Пользователь не найден" }
     },
     "dirtyUsersClaimAll": {
       "endpoint": "dirty-users/claim",
@@ -33,7 +35,8 @@
   },
   "theft": {
     "endpoint": "theft",
-    "method": "POST"
+    "method": "POST",
+    "errors": { "6": "У этого пользователя нет туалетной бумаги" }
   },
   "referrals": {
     "endpoint": "referrals",

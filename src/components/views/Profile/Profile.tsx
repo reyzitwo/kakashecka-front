@@ -57,26 +57,23 @@ const Profile = () => {
   const useItem = async (item: { id: number }, index: number) => {
     if (animateImg) return;
     let response = await api.shopItems.use({}, item.id);
+    if (!response) return;
 
-    if (response) {
-      await animationImageItem(index);
+    await animationImageItem(index);
 
-      waveRef.current!.style.animation = "wave 4s linear";
+    waveRef.current!.style.animation = "wave 4s linear";
 
-      const contamination = stateUser.contamination - item.id * 10;
-      setUser({
-        ...stateUser,
-        contamination: contamination < 0 ? 0 : contamination,
-      });
+    const contamination = stateUser.contamination - item.id * 10;
+    setUser({
+      ...stateUser,
+      contamination: contamination < 0 ? 0 : contamination,
+    });
 
-      setTimeout(() => {
-        waveRef.current!.style.animation = "none";
-      }, 4000);
+    setTimeout(() => {
+      waveRef.current!.style.animation = "none";
+    }, 4000);
 
-      setInventory({ id: item.id, count: -1 });
-    } else {
-      setSnackbar({ status: "error", text: "Вы и так чистый" });
-    }
+    setInventory({ id: item.id, count: -1 });
   };
 
   const animationImageItem = async (index: number) => {
@@ -138,14 +135,8 @@ const Profile = () => {
         const hash = await generateHash();
         let response = await api.ads.watch(hash);
 
-        if (response) {
-          snackbarEarn(response.toilet_paper);
-        } else {
-          setSnackbar({
-            status: "error",
-            text: "Попробуйте позже",
-          });
-        }
+        if (!response) return;
+        snackbarEarn(response.toilet_paper);
       })
       .catch(() =>
         setSnackbar({ status: "error", text: "Нет доступной рекламы" })
@@ -163,7 +154,7 @@ const Profile = () => {
       if (percentage > 0 && percentage < 50) {
         // Линейная интерполяция между 0% и 50%.
         return 35 + (percentage / 50) * (240 - 35);
-      } else if (percentage > 50 && percentage < 100) {
+      } else {
         // Линейная интерполяция между 50% и 100%.
         return 240 + ((percentage - 50) / 50) * (462 - 240);
       }
@@ -184,8 +175,6 @@ const Profile = () => {
 
         if (response) {
           snackbarEarn(response.toilet_paper);
-        } else {
-          setSnackbar({ status: "error", text: "Попробуйте позже" });
         }
       })
       .catch(() =>
@@ -375,11 +364,6 @@ const Profile = () => {
                       );
                       if (response) {
                         snackbarEarn(response.toilet_paper);
-                      } else {
-                        setSnackbar({
-                          status: "error",
-                          text: "Попробуйте позже",
-                        });
                       }
                     }}
                     className={

@@ -42,7 +42,8 @@ class API {
       return await apiRequest(
         endpoint,
         methodInfo.method,
-        methodInfo.method === "GET" ? undefined : params
+        methodInfo.method === "GET" ? undefined : params,
+        methodInfo.errors
       );
     };
   }

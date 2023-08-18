@@ -1,6 +1,13 @@
+import Errors from "./errors.json";
+
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 
-async function api(endpoint: string, method: HttpMethod, params?: object) {
+async function api(
+  endpoint: string,
+  method: HttpMethod,
+  params?: object,
+  errors?: object
+) {
   const data = await fetch(`${import.meta.env.VITE_BACKEND_URL}/${endpoint}`, {
     method: method,
     headers: {
@@ -15,6 +22,18 @@ async function api(endpoint: string, method: HttpMethod, params?: object) {
   });
 
   const json = await data.json();
+
+  if (!json?.status) {
+    const text_error = errors
+      ? // @ts-ignore
+        errors[json?.errorCode]
+      : Errors[json.errorCode];
+
+    window.setSnackbar({
+      status: "error",
+      text: text_error ?? `[№${json.errorCode}] Неизвестная ошибка`,
+    });
+  }
 
   return json.data ?? false;
 }

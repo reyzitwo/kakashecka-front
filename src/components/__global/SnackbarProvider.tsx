@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useRouterModal } from "@kokateam/router-vkminiapps";
 
@@ -9,6 +9,15 @@ import {
 } from "@vkontakte/icons";
 
 import { SelectorSnackbar } from "src/storage/selectors/main";
+
+declare global {
+  interface Window {
+    setSnackbar: (options: {
+      status: "error" | "success" | "warning";
+      text: string;
+    }) => void;
+  }
+}
 
 interface SnackbarProviderI {
   children: ReactNode;
@@ -23,6 +32,10 @@ const icons = {
 export default function SnackbarProvider({ children }: SnackbarProviderI) {
   const [modal] = useRouterModal();
   const [state, setState] = useRecoilState(SelectorSnackbar);
+
+  useEffect(() => {
+    window.setSnackbar = setState; // для API
+  }, []);
 
   return (
     <>
