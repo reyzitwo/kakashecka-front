@@ -1,6 +1,6 @@
 import { ReactNode, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { useRouterModal } from "@kokateam/router-vkminiapps";
+import { useRouterModal, useRouterPopout } from "@kokateam/router-vkminiapps";
 
 import { Snackbar } from "@vkontakte/vkui";
 import {
@@ -30,8 +30,10 @@ const icons = {
 };
 
 export default function SnackbarProvider({ children }: SnackbarProviderI) {
-  const [modal] = useRouterModal();
   const [state, setState] = useRecoilState(SelectorSnackbar);
+
+  const [modal] = useRouterModal();
+  const [popout] = useRouterPopout();
 
   useEffect(() => {
     window.setSnackbar = setState; // для API
@@ -46,7 +48,7 @@ export default function SnackbarProvider({ children }: SnackbarProviderI) {
           before={icons[state.status]}
           onClose={() => setState(null)}
           duration={5 * 1000}
-          className={modal || "vkuiSnackbar_padding"}
+          className={popout || modal ? "popout" : "vkuiSnackbar_padding"}
         >
           {state.text}
         </Snackbar>
