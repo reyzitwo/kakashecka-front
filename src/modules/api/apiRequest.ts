@@ -24,10 +24,12 @@ async function api(
   const json = await data.json();
 
   if (!json?.status) {
-    const text_error = errors
-      ? // @ts-ignore
-        errors[json?.errorCode]
-      : Errors[json.errorCode];
+    const text_error =
+      // @ts-ignore
+      errors && errors[json?.errorCode]
+        ? // @ts-ignore
+          errors[json?.errorCode]
+        : Errors[json.errorCode];
 
     window.setSnackbar({
       status: "error",
