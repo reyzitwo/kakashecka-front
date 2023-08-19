@@ -17,6 +17,9 @@ import bridge, { EAdsFormats } from "@vkontakte/vk-bridge";
 import Base64 from "crypto-js/enc-base64";
 import hmacSHA512 from "crypto-js/hmac-sha512";
 
+//import animation from "./test.json";
+//import Lottie from "lottie-react";
+
 import "./Profile.scss";
 
 const api = new API();
@@ -269,6 +272,8 @@ const Profile = () => {
           </Cell>
         </div>
       </div>
+
+      {/* <Lottie animationData={animation} />*/}
 
       <Group
         header={{ text: "Инвентарь", mode: "left", background: "orange" }}
