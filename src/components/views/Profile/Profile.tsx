@@ -14,6 +14,9 @@ import { SelectorSnackbar } from "src/storage/selectors/main";
 import { API, generateHash, sleep, declOfNum } from "src/modules";
 import bridge, { EAdsFormats } from "@vkontakte/vk-bridge";
 
+import Base64 from "crypto-js/enc-base64";
+import hmacSHA512 from "crypto-js/hmac-sha512";
+
 import "./Profile.scss";
 
 const api = new API();
@@ -167,10 +170,20 @@ const Profile = () => {
         ad_format: EAdsFormats.REWARD,
       })
       .then(async () => {
-        const hash = await generateHash();
+        const ts = Math.floor(Date.now() / 1000);
+        const hmac = Base64.stringify(
+          hmacSHA512(
+            `${window.location.href
+              .slice(window.location.href.indexOf("?") + 1)
+              .split("#")[0]
+              .slice(7)}-${ts}`,
+            String(stateUser.user_id)
+          )
+        );
+
         let response = await api.dirtyUsers.dirtyUsersClaimAll({
-          hmac: hash.hmac,
-          ts: hash.ts,
+          hmac: hmac,
+          ts: ts,
         });
 
         if (response) {
