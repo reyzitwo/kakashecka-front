@@ -168,6 +168,8 @@ const Profile = () => {
   };
 
   const claimAllPaper = async () => {
+    if (!stateDirty) return;
+
     bridge
       .send("VKWebAppShowNativeAds", {
         ad_format: EAdsFormats.REWARD,
@@ -190,6 +192,9 @@ const Profile = () => {
         });
 
         if (response) {
+          setDirty(
+            [...stateDirty].map((el) => ({ ...el, claim_available: false }))
+          );
           snackbarEarn(response.toilet_paper);
         }
       })
@@ -368,7 +373,7 @@ const Profile = () => {
           stateDirty.length === 0 ? (
             <Placeholder>У вас нет испачканных пользователей</Placeholder>
           ) : (
-            stateDirty.map((element) => (
+            stateDirty.map((element, index) => (
               <Cell
                 key={element.id}
                 after={
@@ -378,9 +383,16 @@ const Profile = () => {
                     onClick={async () => {
                       let response = await api.dirtyUsers.dirtyUsers(
                         {},
-                        element.id
+                        element.user_id
                       );
                       if (response) {
+                        const arrayUsers = [...stateDirty];
+                        arrayUsers[index] = {
+                          ...element,
+                          claim_available: false,
+                        };
+
+                        setDirty(arrayUsers);
                         snackbarEarn(response.toilet_paper);
                       }
                     }}
