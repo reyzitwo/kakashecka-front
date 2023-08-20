@@ -32,6 +32,17 @@ const App = withAdaptivity(
         "desktop_web";
 
     useEffect(() => {
+      bridge.subscribe(({ detail: { type } }) => {
+        if (type === "VKWebAppUpdateConfig")
+          bridge.send("VKWebAppSetViewSettings", {
+            status_bar_style: "dark",
+            action_bar_color: "#f6f7f9",
+            navigation_bar_color: "#f6f7f9",
+          });
+      });
+    }, []);
+
+    useEffect(() => {
       getUser();
 
       setSettings({ isSwipeBack: false });
