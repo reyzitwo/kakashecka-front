@@ -66,3 +66,12 @@
 .button-disabled {
   opacity: 0.5;
 }
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

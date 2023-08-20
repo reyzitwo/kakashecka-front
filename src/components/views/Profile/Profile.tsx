@@ -285,6 +285,7 @@ const Profile = () => {
         className={`Profile-Inventory ${
           !stateInventory ? "Profile-Inventory__loading" : ""
         }`}
+        classNameContent={"hide-scrollbar"}
       >
         {stateInventory ? (
           <>
@@ -320,7 +321,7 @@ const Profile = () => {
         )}
       </Group>
 
-      <div className={"Profile__buttons"}>
+      <div className={"Profile__buttons hide-scrollbar"}>
         <Button
           before={<Icons.IconUsers />}
           background={"white"}

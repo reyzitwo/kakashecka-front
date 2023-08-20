@@ -9,5 +9,6 @@ export default interface GroupProps {
     className?: string;
   };
   className?: string;
+  classNameContent?: string;
   children: ReactNode;
 }

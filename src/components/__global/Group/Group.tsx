@@ -9,6 +9,7 @@ const Group: FC<Props> = ({
   paddingLevel = 1,
   header,
   className,
+  classNameContent,
   children,
 }) => {
   return (
@@ -35,6 +36,7 @@ const Group: FC<Props> = ({
       <div
         className={clsx("Group__content", [
           header && `Group__content_padding-top_${paddingLevel}`,
+          classNameContent,
         ])}
       >
         {children}
