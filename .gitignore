@@ -23,3 +23,5 @@ build.zip
 *.njsproj
 *.sln
 *.sw?
+.cert/*
+*.lock
