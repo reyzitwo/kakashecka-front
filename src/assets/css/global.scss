@@ -90,3 +90,7 @@ symbol[id="error_circle_fill_red_24"] {
   bottom: calc(82px + 20px); // height tabbar + margin
   transition: bottom 0.3s ease;
 }
+
+img {
+  pointer-events: none;
+}
