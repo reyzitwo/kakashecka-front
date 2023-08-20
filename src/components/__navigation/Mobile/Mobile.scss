@@ -5,6 +5,7 @@
   box-shadow: var(--box-shadow) !important;
 
   padding: 11px 0 15px !important;
+  bottom: var(--safe-area-inset-bottom) !important;
 
   &:before {
     content: none !important;
