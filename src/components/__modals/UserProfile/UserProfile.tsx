@@ -120,9 +120,11 @@ const UserProfile: FC<Props> = ({ id, onClose }) => {
         state.id !== stateUser.id && (
           <>
             <Button
+              disabled={state.toilet_paper === 0}
               size={"large"}
               before={<img src={ImgToiletPaper} alt={""} />}
               onClick={theft}
+              className={state.toilet_paper === 0 ? "button-disabled" : ""}
             >
               Украсть бумагу
             </Button>

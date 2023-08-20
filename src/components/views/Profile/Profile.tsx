@@ -397,7 +397,7 @@ const Profile = () => {
                       }
                     }}
                     className={
-                      !element.claim_available ? "DirtyUser__disabled" : ""
+                      !element.claim_available ? "button-disabled" : ""
                     }
                   >
                     {element.amount_of_paper}{" "}
