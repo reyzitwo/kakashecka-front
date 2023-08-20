@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
+import { useRouterSettings } from "@kokateam/router-vkminiapps";
 
 import {
   AppearanceProvider,
@@ -21,6 +22,8 @@ const App = withAdaptivity(
     const [, updateMainCoil] = useRecoilState(main);
     const [, setStateUser] = useRecoilState(user);
 
+    const [, setSettings] = useRouterSettings();
+
     const platform = usePlatform();
 
     const isDesktop =
@@ -31,6 +34,7 @@ const App = withAdaptivity(
     useEffect(() => {
       getUser();
 
+      setSettings({ isSwipeBack: false });
       updateMainCoil((prev) => ({
         ...prev,
         isDesktop,
