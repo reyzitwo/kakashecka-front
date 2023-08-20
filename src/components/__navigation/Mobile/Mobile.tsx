@@ -7,7 +7,17 @@ import "./Mobile.scss";
 
 const MobileNavigation = () => {
   const [view, toView] = useRouterView();
-  const [, toPopout] = useRouterPopout();
+  const [activePopout, toPopout] = useRouterPopout();
+
+  const customToView = (id: string) => {
+    if (activePopout) window.closeAlert();
+    setTimeout(
+      () => {
+        toView(id);
+      },
+      activePopout ? 300 : 0
+    );
+  };
 
   return (
     <Tabbar>
@@ -22,7 +32,7 @@ const MobileNavigation = () => {
               return window.scrollTo(0, 0);
             }
 
-            toView(el.id);
+            customToView(el.id);
           }}
           key={key}
           selected={view === el.id}

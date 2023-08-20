@@ -1,5 +1,4 @@
-import { FC, useState } from "react";
-import { useEffect } from "react";
+import { FC, useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useRouterBack } from "@kokateam/router-vkminiapps";
 
@@ -14,6 +13,12 @@ import Props from "./Alert.interface";
 import { main } from "src/storage/atoms";
 
 import "./Alert.scss";
+
+declare global {
+  interface Window {
+    closeAlert: () => void;
+  }
+}
 
 const Alert: FC<Props> = ({
   id,
@@ -31,6 +36,8 @@ const Alert: FC<Props> = ({
   const [debounce, setDebounce] = useState(!isDebounce);
 
   useEffect(() => {
+    window.closeAlert = closeAlert;
+
     document.getElementsByClassName(
       "vkuiPopoutRoot__popout PopoutRoot__popout"
     )[0].id = id;
@@ -46,8 +53,6 @@ const Alert: FC<Props> = ({
   }, []);
 
   const closeAlert = () => {
-    close();
-
     setState((prev) => ({ ...prev, closingAlert: true }));
     setTimeout(() => {
       toBack(-1);
