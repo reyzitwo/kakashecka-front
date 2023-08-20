@@ -24,7 +24,11 @@ const More = ({}) => {
 
   return (
     <Alert id={"more"} header={"Ещё"} isDebounce>
-      <Cell before={<Icons.Group />} subheader={"Наше официальное сообщество"}>
+      <Cell
+        before={<Icons.Group />}
+        subheader={"Наше официальное сообщество"}
+        onClick={() => window.open("https://vk.com/public221870940", "_blank")}
+      >
         Открыть паблик
       </Cell>
 
@@ -41,13 +45,20 @@ const More = ({}) => {
         Уведомления
       </Cell>
 
-      <Cell before={<Icons.Game />} subheader={"Манул о том как играть"}>
+      <Cell
+        before={<Icons.Game />}
+        subheader={"Манул о том как играть"}
+        onClick={() =>
+          window.open("https://vk.com/@-221870940-kak-igrat", "_blank")
+        }
+      >
         Как играть?
       </Cell>
 
       <Cell
         before={<Icons.Support />}
         subheader={"Остались вопросы ? – Задайте их нам."}
+        onClick={() => window.open("https://vk.com/public222112101", "_blank")}
       >
         Поддержка
       </Cell>
