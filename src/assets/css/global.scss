@@ -31,6 +31,7 @@
 html,
 body {
   font-family: "Euclid Circular A", sans-serif;
+  overscroll-behavior-y: none;
 }
 
 .vkuiPanel .vkuiPanel__in,
