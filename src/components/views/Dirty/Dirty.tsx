@@ -64,7 +64,7 @@ const Dirty = () => {
         before={<Icon12Clock height={20} width={20} />}
         size={"large"}
         stretched
-        onClick={() => toModal("shareStories", "referral_invite")}
+        onClick={() => toModal("shareStories", { type: "referral_invite" })}
         className={"Dirty_share-story mt10"}
       >
         Поделиться в истории
@@ -82,7 +82,10 @@ const Dirty = () => {
               after={
                 <Button
                   onClick={() => {
-                    toModal("shareStories", "referral_player");
+                    toModal("shareStories", {
+                      type: "referral_player",
+                      data: element.user_id,
+                    });
                   }}
                   className={"Dirty__button-share-user"}
                 >

@@ -16,35 +16,60 @@ import Props from "../modal.interface";
 import "./ShareStories.scss";
 
 const ShareStories: FC<Props> = ({ id, onClose }) => {
-  const typeTemplates: "referral_invite" | "referral_player" = useRouterData();
+  const dataRouter: {
+    type: "referral_invite" | "referral_player";
+    data?: number;
+  } = useRouterData();
+
+  const [currentDataRouter] = useState(dataRouter);
   const [state, setState] = useRecoilState(stories);
   const userInfo = useRecoilValue(user);
 
   // костыль, TODO: поправить в роутере
-  const [templates, setTemplates] = useState(state.templates[typeTemplates]);
+  const [templates, setTemplates] = useState(
+    state.templates[currentDataRouter.type]
+  );
 
   useEffect(() => {
     if (templates) return;
     getTemplates();
+
+    return () => {
+      setState({ ...state, active: 0 });
+    };
   }, []);
 
   const getTemplates = async () => {
-    let response = await new API().stories.get({ type: typeTemplates });
+    let response = await new API().stories.get({
+      type: currentDataRouter.type,
+    });
 
     setTemplates(response);
     setState({
       ...state,
-      templates: { ...state.templates, [typeTemplates]: response },
+      templates: { ...state.templates, [currentDataRouter.type]: response },
     });
   };
 
-  const shareStories = () => {
+  const shareStories = async () => {
     if (!templates) return;
+    let image: { url?: string; blob?: string } = {
+      url: templates[state.active].url,
+    };
+
+    if (currentDataRouter.type === "referral_player") {
+      let blob_image = await new API().stories.post({
+        template_id: templates[state.active].id,
+        user_id: currentDataRouter.data ?? 1,
+      });
+
+      image = { blob: `data:image/png;base64,${blob_image}` };
+    }
 
     bridge
       .send("VKWebAppShowStoryBox", {
+        ...image,
         background_type: "image",
-        url: templates[state.active].url,
         attachment: {
           text: "open",
           type: "url",
@@ -76,19 +101,19 @@ const ShareStories: FC<Props> = ({ id, onClose }) => {
 
       {templates ? (
         <div className={"ShareStories-Templates"}>
-          {templates.map((el) => (
+          {templates.map((el, index) => (
             <div
+              onClick={() => setState({ ...state, active: index })}
               className={clsx(
                 "ShareStories-Templates__item",
-                el.id === state.active && "ShareStories-Templates__item_active"
+                index === state.active && "ShareStories-Templates__item_active"
               )}
             >
               <img
-                id={el.id === state.active ? "active" : ""}
+                id={index === state.active ? "active" : ""}
                 key={el.id}
                 src={el.url}
                 alt={""}
-                onClick={() => setState({ ...state, active: el.id })}
               />
             </div>
           ))}

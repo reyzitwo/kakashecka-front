@@ -12,7 +12,7 @@ interface storiesI {
 const _ = atom<storiesI>({
   key: "storiesStorage",
   default: {
-    active: 1,
+    active: 0,
     templates: {
       referral_invite: null,
       referral_player: null,

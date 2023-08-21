@@ -82,7 +82,4 @@ export type StoriesTemplatesResponse = Array<{
   url: string;
 }>;
 
-export interface StoriesResponse {
-  template_id: number;
-  user_id: number;
-}
+export type StoriesResponse = string;
