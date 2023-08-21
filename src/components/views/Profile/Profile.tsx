@@ -17,9 +17,6 @@ import bridge, { EAdsFormats } from "@vkontakte/vk-bridge";
 import Base64 from "crypto-js/enc-base64";
 import hmacSHA512 from "crypto-js/hmac-sha512";
 
-//import animation from "./test.json";
-//import Lottie from "lottie-react";
-
 import "./Profile.scss";
 
 const api = new API();
@@ -37,7 +34,7 @@ const Profile = () => {
   const [animateImg, setAnimateImg] = useState(false);
 
   const avatarRef = useRef<HTMLImageElement>(null);
-  const itemsInventoryRefs = useRef<HTMLImageElement[]>([]);
+  const itemsInventoryRefs = useRef<HTMLDivElement[]>([]);
   const waveRef = useRef<HTMLImageElement>();
 
   useEffect(() => {
@@ -61,6 +58,9 @@ const Profile = () => {
   };
 
   const useItem = async (item: { id: number }, index: number) => {
+    await animationImageItem(index);
+    return;
+
     if (animateImg) return;
     let response = await api.shopItems.use({}, item.id);
     if (!response) return;
@@ -83,11 +83,17 @@ const Profile = () => {
   };
 
   const animationImageItem = async (index: number) => {
+    const item = itemsInventoryRefs.current[index];
+
+    const imageItem = item.getElementsByTagName("img")[0];
+    const titleItem = item.getElementsByClassName(
+      "Profile-Inventory__title"
+    )[0] as HTMLDivElement;
+
     if (!avatarRef.current) return;
     setAnimateImg(true);
 
-    const imageItemRect =
-      itemsInventoryRefs.current[index].getBoundingClientRect();
+    const imageItemRect = imageItem.getBoundingClientRect();
     const avatarRect = avatarRef.current.getBoundingClientRect();
 
     const delta = {
@@ -95,30 +101,28 @@ const Profile = () => {
       y: avatarRect.top - imageItemRect.top + 20,
     };
 
-    itemsInventoryRefs.current[
-      index
-    ].style.transform = `translate(${delta.x}px, ${delta.y}px)`;
+    imageItem.style.position = "fixed";
+    titleItem.style.marginTop = `${imageItemRect.height + 8}px`;
+    imageItem.style.transition = `transform 500ms ease-in-out`;
+    imageItem.style.transform = `translate(${delta.x}px, ${delta.y}px)`;
     await sleep(500);
 
-    itemsInventoryRefs.current[
-      index
-    ].style.transition = `transform 250ms ease-in-out`;
-    itemsInventoryRefs.current[index].style.transform = `translate(${
-      delta.x - 40
-    }px, ${delta.y}px)`;
+    imageItem.style.transition = `transform 250ms ease-in-out`;
+    imageItem.style.transform = `translate(${delta.x - 40}px, ${delta.y}px)`;
     await sleep(250);
 
-    itemsInventoryRefs.current[index].style.transform = `translate(${
-      delta.x + 40
-    }px, ${delta.y}px)`;
+    imageItem.style.transform = `translate(${delta.x + 40}px, ${delta.y}px)`;
     await sleep(250);
 
-    itemsInventoryRefs.current[
-      index
-    ].style.transition = `transform 500ms ease-in-out`;
-    itemsInventoryRefs.current[index].style.transform = "translate(0, 0)";
+    imageItem.style.transition = `transform 500ms ease-in-out`;
+    imageItem.style.transform = "translate(0, -8px)";
 
     await sleep(500);
+
+    titleItem.style.marginTop = "0";
+    imageItem.style.transition = "none";
+    imageItem.style.transform = "none";
+    imageItem.style.position = "initial";
 
     setAnimateImg(false);
     return true;
@@ -155,14 +159,14 @@ const Profile = () => {
     } else if (percentage === 50) {
       return 240;
     } else if (percentage === 100) {
-      return 462;
+      return 425;
     } else {
       if (percentage > 0 && percentage < 50) {
         // Линейная интерполяция между 0% и 50%.
         return 35 + (percentage / 50) * (240 - 35);
       } else {
         // Линейная интерполяция между 50% и 100%.
-        return 240 + ((percentage - 50) / 50) * (462 - 240);
+        return 240 + ((percentage - 50) / 50) * (425 - 240);
       }
     }
   };
@@ -278,8 +282,6 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* <Lottie animationData={animation} />*/}
-
       <Group
         header={{ text: "Инвентарь", mode: "left", background: "orange" }}
         className={`Profile-Inventory ${
@@ -293,6 +295,7 @@ const Profile = () => {
             {stateInventory.map((item, index) => (
               <div
                 key={item.id}
+                ref={(el) => el && (itemsInventoryRefs.current[index] = el)}
                 onClick={() => useItem(item, index)}
                 className={"Profile-Inventory__Item"}
               >
@@ -300,11 +303,7 @@ const Profile = () => {
                   {item.count}
                 </Badge>
 
-                <img
-                  src={item.photo_url}
-                  ref={(el) => el && (itemsInventoryRefs.current[index] = el)}
-                  alt={""}
-                />
+                <img src={item.photo_url} alt={""} />
                 <div className={"Profile-Inventory__title"}>{item.title}</div>
               </div>
             ))}
