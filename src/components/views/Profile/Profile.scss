@@ -14,7 +14,7 @@
     height: 310px;
     width: 100%;
     background-size: cover;
-    z-index: -1;
+    z-index: -3;
   }
 
   &:before {
@@ -30,15 +30,27 @@
     margin-top: 10px;
   }
 
+  .Profile__kakash,
+  .Profile__kakash-background {
+    transition: all 4s ease;
+  }
+
   .Profile__kakash {
     position: absolute;
     bottom: 0;
     z-index: -1;
 
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .Profile__kakash-background {
+    position: absolute;
+    bottom: 0;
+    z-index: -2;
+
     background: url(./img/background_2.webp) repeat-x;
     width: calc(420px * 6);
-
-    transition: all 4s ease;
   }
 
   .Profile__action {
@@ -206,6 +218,13 @@
 
   .Cell .Cell__after img {
     height: 14px;
+  }
+}
+
+@media screen and (min-device-width: 750px) {
+  .Profile .Profile__kakash {
+    height: 400px;
+    width: 70%;
   }
 }
 

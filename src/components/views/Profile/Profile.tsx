@@ -1,16 +1,17 @@
 import { useEffect, useState, useRef } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useRouterView, useRouterModal } from "@kokateam/router-vkminiapps";
 
 import { Avatar, Placeholder, Title } from "@vkontakte/vkui";
 import { Group, Button, Cell, Badge, Spinner } from "src/components/__global";
 import { Icon24Gift, Icon24Add } from "@vkontakte/icons";
 import { ImgToiletPaper } from "src/assets/img";
+import ImgPoors from "./img/poors.webp";
 import * as Icons from "./svg";
 
 import { user, shop, dirtyUsers } from "src/storage/atoms";
 import { SelectorShopInventory } from "src/storage/selectors/shop";
-import { SelectorSnackbar } from "src/storage/selectors/main";
+import { SelectorSnackbar, getIsDesktop } from "src/storage/selectors/main";
 import { API, generateHash, sleep, declOfNum } from "src/modules";
 import bridge, { EAdsFormats } from "@vkontakte/vk-bridge";
 
@@ -35,7 +36,8 @@ const Profile = () => {
 
   const avatarRef = useRef<HTMLImageElement>(null);
   const itemsInventoryRefs = useRef<HTMLDivElement[]>([]);
-  const waveRef = useRef<HTMLImageElement>();
+  const waveRef = useRef<HTMLDivElement>();
+  const isDesktop = useRecoilValue(getIsDesktop);
 
   useEffect(() => {
     if (shopState || stateUser.name === "") return;
@@ -58,9 +60,6 @@ const Profile = () => {
   };
 
   const useItem = async (item: { id: number }, index: number) => {
-    await animationImageItem(index);
-    return;
-
     if (animateImg) return;
     let response = await api.shopItems.use({}, item.id);
     if (!response) return;
@@ -153,20 +152,32 @@ const Profile = () => {
       );
   };
 
-  const calculateHeightInPx = (percentage: number) => {
+  const calcHeightWave = (arrayPx: number[], percentage: number) => {
     if (percentage === 0) {
-      return 35;
+      return arrayPx[0];
+    } else if (percentage === 25) {
+      return arrayPx[1];
     } else if (percentage === 50) {
-      return 240;
+      return arrayPx[2];
+    } else if (percentage === 75) {
+      return arrayPx[3];
     } else if (percentage === 100) {
-      return 425;
+      return arrayPx[4];
     } else {
-      if (percentage > 0 && percentage < 50) {
-        // Линейная интерполяция между 0% и 50%.
-        return 35 + (percentage / 50) * (240 - 35);
+      if (percentage > 0 && percentage < 25) {
+        // Линейная интерполяция между 0% и 25%.
+        return arrayPx[0] + (percentage / 50) * (arrayPx[1] - arrayPx[0]);
+      } else if (percentage > 25 && percentage < 50) {
+        // Линейная интерполяция между 25% и 50%.
+        return arrayPx[1] + (percentage / 50) * (arrayPx[2] - arrayPx[1]);
+      } else if (percentage > 50 && percentage < 75) {
+        // Линейная интерполяция между 50% и 75%.
+        return arrayPx[2] + (percentage / 50) * (arrayPx[3] - arrayPx[2]);
       } else {
-        // Линейная интерполяция между 50% и 100%.
-        return 240 + ((percentage - 50) / 50) * (425 - 240);
+        // Линейная интерполяция между 75% и 100%.
+        return (
+          arrayPx[3] + ((percentage - 50) / 50) * (arrayPx[4] - arrayPx[3])
+        );
       }
     }
   };
@@ -222,21 +233,36 @@ const Profile = () => {
 
   return (
     <>
-      <div className="ocean">
-        <div className="wave"></div>
-      </div>
-
       <div className={"Profile"}>
         <Avatar src={stateUser.avatar} size={80} getRef={avatarRef} />
         <Title level={"2"}>
           Вы грязный <br /> на {stateUser.contamination}%
         </Title>
 
+        <img
+          src={ImgPoors}
+          alt={""}
+          style={{
+            bottom: `${calcHeightWave(
+              isDesktop
+                ? [-400, -370, -265, -170, 0]
+                : [-312, -290, -200, -100, 0],
+              stateUser.contamination
+            )}px`,
+          }}
+          className={"Profile__kakash"}
+        />
+
         <div
           //@ts-ignore
           ref={waveRef}
-          style={{ height: calculateHeightInPx(stateUser.contamination) }}
-          className={"Profile__kakash"}
+          style={{
+            height: calcHeightWave(
+              [0, 120, 240, 332, 425],
+              stateUser.contamination
+            ),
+          }}
+          className={"Profile__kakash-background"}
         />
 
         <div className={"Profile__action"}>
